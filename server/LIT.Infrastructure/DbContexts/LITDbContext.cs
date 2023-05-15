@@ -17,7 +17,6 @@ public class LITDbContext : DbContext
     {
         modelBuilder.Entity<Product>().ToTable("Products");
         modelBuilder.Entity<User>().ToTable("Users");
-
         
         base.OnModelCreating(modelBuilder);
     }

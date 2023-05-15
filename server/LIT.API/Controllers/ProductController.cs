@@ -6,6 +6,7 @@ using LIT.Core.Models;
 namespace LIT.API.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class ProductController : ControllerBase
 {
@@ -22,7 +23,7 @@ public class ProductController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<Product>> RetrievePostByIdAsync(Guid id)
+    public async Task<ActionResult<Product>> RetrieveProductByIdAsync(Guid id)
     {
         var result = await _productService.RetrieveByIdAsync(id);
         return StatusCode(result.StatusCode, result.ErrorMessage ?? (object) result.Data);
@@ -33,41 +34,38 @@ public class ProductController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<Product>> RetrievePostsAsync(int offset, int limit)
+    public async Task<ActionResult<Product>> RetrieveProductsAsync()
     {
-        var result = await _productService.RetrieveAsync(offset, limit);
+        var result = await _productService.RetrieveAsync();
         return StatusCode(result.StatusCode, result.ErrorMessage ?? (object) result.Data);
     }
 
     [HttpPost]
-    [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<Product>> AddPost([FromBody] Product product)
+    public async Task<ActionResult<Product>> AddProdudct([FromBody] Product product)
     {
         var result = await _productService.AddAsync(product);
         return StatusCode(result.StatusCode, result.ErrorMessage ?? (object) result.Data);
     }
 
     [HttpPut]
-    [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<Product>> UpdatePostAsync([FromBody] Product product)
+    public async Task<ActionResult<Product>> UpdateProductAsync([FromBody] Product product)
     {
         var result = await _productService.UpdateAsync(product);
         return StatusCode(result.StatusCode, result.ErrorMessage ?? (object) result.Data);
     }
     
     [HttpDelete]
-    [Authorize]
     [Route("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult DeletePost(Guid id)
+    public ActionResult DeleteProduct(Guid id)
     {
         var result = _productService.Delete(id);
         return StatusCode(result.StatusCode, result.ErrorMessage ?? result.Data);

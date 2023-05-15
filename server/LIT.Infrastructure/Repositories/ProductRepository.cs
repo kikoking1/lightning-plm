@@ -17,16 +17,16 @@ public class ProductRepository : IProductRepository
     public async Task<Product?> RetrieveByIdAsync(Guid id, Guid userId)
     {
         return await _litDbContext.Products
-            .Where(product=> product.Id == id)
+            .Where(product => product.Id == id)
+            .Where(product => product.UserId == userId)
             .FirstOrDefaultAsync();
     }
     
-    public async Task<List<Product>> RetrieveAsync(int offset, int limit, Guid userId)
+    public async Task<List<Product>> RetrieveAsync(Guid userId)
     {
         return await _litDbContext.Products
             .OrderByDescending(b => b.DateCreated)
-            .Skip(offset)
-            .Take(limit)
+            .Where(product => product.UserId == userId)
             .ToListAsync();
     }
     

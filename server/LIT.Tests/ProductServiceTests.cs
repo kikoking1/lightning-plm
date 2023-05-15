@@ -56,38 +56,21 @@ public class ProductServiceTests
         var result = await _sut.RetrieveByIdAsync(It.IsAny<Guid>());
 
         result.Data.Should().NotBe(null);
-        result.Data?.Body.Should().Be(product.Body);
+        result.Data?.Name.Should().Be(product.Name);
         result.ErrorMessage.Should().Be(null);
         result.StatusCode.Should().Be(StatusCodes.Status200OK);
     }
-    
-    [Theory]
-    [InlineData(-1, 100)]
-    [InlineData(0, 101)]
-    [InlineData(10, 0)]
-    [InlineData(10, -1)]
-    public async Task RetrieveAsync_Should_Return_Status400BadRequest_When_Invalid_Limit_Offset_Parameters(int offset, int limit)
-    {
-        var result = await _sut.RetrieveAsync(offset, limit);
 
-        result.Data.Should().BeNull();
-        result.ErrorMessage.Should().Be("Invalid limit or offset. Limit cannot be greater than 100, or less than 1. Offset cannot be less than 0.");
-        result.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
-    }
-    
-    [Theory]
-    [InlineData(0, 100)]
-    [InlineData(0, 10)]
-    [InlineData(100, 1)]
-    public async Task RetrieveAsync_Should_Return_Status200OK_When_Valid_Limit_Offset_Parameters(int offset, int limit)
+    [Fact]
+    public async Task RetrieveAsync_Should_Return_Status200OK_When_Valid_Limit_Offset_Parameters()
     {
         var products = _fixture.Create<List<Product>>();
 
         _productRepositoryMock
-            .Setup(mock => mock.RetrieveAsync(offset, limit, It.IsAny<Guid>()))
+            .Setup(mock => mock.RetrieveAsync(It.IsAny<Guid>()))
             .ReturnsAsync(products);
         
-        var result = await _sut.RetrieveAsync(offset, limit);
+        var result = await _sut.RetrieveAsync();
 
         result.Data.Should().NotBeEmpty();
         result.ErrorMessage.Should().BeNull();
@@ -98,7 +81,7 @@ public class ProductServiceTests
     public async Task AddAsync_Should_Return_Status400BadRequest_When_Product_Body_Is_Empty()
     {
         var product= _fixture.Build<Product>()
-            .With(x => x.Body, String.Empty)
+            .With(x => x.Name, String.Empty)
             .Create();
 
         var result = await _sut.AddAsync(product);
@@ -112,7 +95,7 @@ public class ProductServiceTests
     public async Task AddAsync_Should_Return_Status400BadRequest_When_GetSessionUserId_Fails_With_Status400BadRequest()
     {
         var product= _fixture.Build<Product>()
-            .With(x => x.Body, _fixture.Create<string>())
+            .With(x => x.Name, _fixture.Create<string>())
             .Create();
 
         _tokenServiceMock
@@ -134,7 +117,7 @@ public class ProductServiceTests
     public async Task AddAsync_Should_Return_Status200OK_When_Product_Body_Is_Filled()
     {
         var product= _fixture.Build<Product>()
-            .With(x => x.Body, _fixture.Create<string>())
+            .With(x => x.Name, _fixture.Create<string>())
             .Create();
         
         var userId = _fixture.Create<Guid>();
@@ -150,7 +133,7 @@ public class ProductServiceTests
         var result = await _sut.AddAsync(product);
 
         result.Data.Should().NotBeNull();
-        result.Data?.Body.Should().Be(product.Body);
+        result.Data?.Name.Should().Be(product.Name);
         result.Data?.UserId.Should().Be(userId);
         result.ErrorMessage.Should().BeNull();
         result.StatusCode.Should().Be(StatusCodes.Status200OK);

@@ -41,31 +41,22 @@ public class ProductService : IProductService
         };
     }    
     
-    public async Task<ResultType<List<Product>>> RetrieveAsync(int offset, int limit)
+    public async Task<ResultType<List<Product>>> RetrieveAsync()
     {
         var sessionUserIdResult = _tokenService.GetSessionUserId();
         
         var userId = sessionUserIdResult.Data;
-        
-        if (limit > 100 || limit < 1 || offset < 0)
-        {
-            return new ResultType<List<Product>>
-            {
-                StatusCode = StatusCodes.Status400BadRequest,
-                ErrorMessage = "Invalid limit or offset. Limit cannot be greater than 100, or less than 1. Offset cannot be less than 0."
-            };
-        }
 
         return new ResultType<List<Product>>
         {
             StatusCode = StatusCodes.Status200OK,
-            Data = await _productRepository.RetrieveAsync(offset, limit, userId)
+            Data = await _productRepository.RetrieveAsync(userId)
         };
     }
     
     public async Task<ResultType<Product>> AddAsync(Product product)
     {
-        if (product.Body == String.Empty)
+        if (product.Name == String.Empty)
         {
             return new ResultType<Product>
             {
