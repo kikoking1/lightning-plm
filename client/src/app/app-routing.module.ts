@@ -10,8 +10,10 @@ const routes: Routes = [
   {
     path: 'products',
     component: ProductListComponent,
+    pathMatch: 'full',
   },
-  { path: 'products/add', component: ProductAddComponent },
+  { path: 'products/add', component: ProductAddComponent, pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];
 

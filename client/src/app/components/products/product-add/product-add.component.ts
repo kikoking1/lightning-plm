@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product } from '../product';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 
 @Component({
   selector: 'app-product-add',
@@ -11,10 +11,7 @@ import { Observable, tap } from 'rxjs';
 export class ProductAddComponent {
   productAddForm!: FormGroup;
   product = new Product();
-
-  productName$: Observable<string> | undefined = this.productAddForm.get(
-    'productAddForm.name'
-  )?.valueChanges;
+  productNameDisplay$: Observable<string> | undefined;
 
   constructor(private fb: FormBuilder) {}
 
@@ -22,6 +19,9 @@ export class ProductAddComponent {
     this.productAddForm = this.fb.group({
       name: ['', [Validators.required]],
     });
+
+    this.productNameDisplay$ =
+      this.productAddForm.controls['name']?.valueChanges;
   }
 
   save(): void {

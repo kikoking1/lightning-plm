@@ -1,6 +1,9 @@
 <div class="container">
   <h1>
-    Add Product: <span>{{ productName$ | async }}</span>
+    Add Product
+    <span *ngIf="productNameDisplay$ | async as productNameDisplay"
+      >: {{ productNameDisplay }}</span
+    >
   </h1>
   <form novalidate (ngSubmit)="save()" [formGroup]="productAddForm">
     <div class="mb-3">
@@ -18,6 +21,12 @@
         }"
       />
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="!productAddForm.valid"
+    >
+      Create
+    </button>
   </form>
 </div>
