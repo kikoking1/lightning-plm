@@ -1,0 +1,23 @@
+<div class="container">
+  <h1>
+    Add Product: <span>{{ productName$ | async }}</span>
+  </h1>
+  <form novalidate (ngSubmit)="save()" [formGroup]="productAddForm">
+    <div class="mb-3">
+      <label for="name" class="form-label">Product Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        formControlName="name"
+        [ngClass]="{
+          'is-invalid':
+            (productAddForm.get('name')?.touched ||
+              productAddForm.get('name')?.dirty) &&
+            !productAddForm.get('name')?.valid
+        }"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
