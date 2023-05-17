@@ -16,12 +16,10 @@ public class LITDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Product>()
-            .ToTable("Products")
-            .HasOne(e => e.User)
-            .WithMany(e => e.Products)
-            .OnDelete(DeleteBehavior.SetNull);
+            .ToTable("Products");
         modelBuilder.Entity<User>()
-            .ToTable("Users");
+            .ToTable("Users")
+            .HasMany(e => e.Products);
         
         base.OnModelCreating(modelBuilder);
     }

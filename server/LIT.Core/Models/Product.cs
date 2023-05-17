@@ -8,7 +8,7 @@ public class Product
     public string Name { get; set; }
     [ForeignKey("User")]
     public Guid? UserId { get; set; }
-    public User User { get; set; }
+
     public DateTime DateCreated { get; set; }
     public DateTime DateModified { get; set; }
 }
