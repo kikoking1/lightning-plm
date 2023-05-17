@@ -19,7 +19,7 @@ mkdir apps
 cd apps
 mkdir lightningplm-app
 cd lightningplm-app
-git clone https://github.com/kikoking1/lightningplm.git
+git clone https://github.com/kikoking1/lightning-plm.git
 bash /home/ubuntu/apps/lightningplm-app/lightningplm/devops/new-ubuntu-server-setup.sh
 ```
 
