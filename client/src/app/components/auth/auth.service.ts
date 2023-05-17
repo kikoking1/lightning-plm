@@ -21,7 +21,9 @@ export class AuthService {
 
   register(user: NewUser) {
     this.http
-      .post<NewUser>(`${this.authUrl}/register`, user)
+      .post<NewUser>(`${this.authUrl}/register`, user, {
+        withCredentials: true,
+      })
       .subscribe((user) => {
         console.log(user);
         this.router.navigate(['/auth/login']);
@@ -30,7 +32,9 @@ export class AuthService {
 
   login(userLogin: UserLogin) {
     this.http
-      .post<JWTToken>(`${this.authUrl}/login`, userLogin)
+      .post<JWTToken>(`${this.authUrl}/login`, userLogin, {
+        withCredentials: true,
+      })
       .subscribe((res) => {
         AuthInterceptor.accessToken = res.token;
         this.router.navigate(['/products']);

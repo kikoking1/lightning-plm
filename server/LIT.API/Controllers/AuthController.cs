@@ -62,7 +62,7 @@ public class AuthController : ControllerBase
             Response.Cookies.Append("X-Refresh-Token", result.Data.RefreshToken, new CookieOptions() { HttpOnly = true, SameSite = _sameSiteMode, Secure = true});
         }
 
-        return StatusCode(result.StatusCode, result.ErrorMessage ?? (object) result.Data?.AccessToken);
+        return StatusCode(result.StatusCode, result.ErrorMessage ?? (object) new JWTToken{ Token = result.Data?.AccessToken });
     }
     
     [HttpGet("logout")]
