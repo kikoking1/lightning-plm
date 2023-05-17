@@ -7,8 +7,9 @@ public class Mappings : Profile
 {
     public Mappings()
     {
-        //ignore non matching members
         CreateMap<User, UserDto>();
         CreateMap<UserDto, User>();
+        CreateMap<NewUser, User>();
+        
     }
 }

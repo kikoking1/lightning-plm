@@ -36,7 +36,7 @@ public class UserServiceTests
     [Fact]
     public async Task RegisterAsync_Should_Return_Status400BadRequest_When_Username_Not_Available()
     {
-        var userLogin = _fixture.Create<UserLogin>();
+        var newUser = _fixture.Create<NewUser>();
         var existingUser = _fixture.Create<User>();
         
         _userRepositoryMock
@@ -44,27 +44,27 @@ public class UserServiceTests
                 It.IsAny<string>()))
             .ReturnsAsync(existingUser);
         
-        var result = await _sut.RegisterAsync(userLogin);
+        var result = await _sut.RegisterAsync(newUser);
 
         result.Data.Should().BeNull();
-        result.ErrorMessage.Should().Be($"User with username: {userLogin.Username} is not available.");
+        result.ErrorMessage.Should().Be($"User with username: {newUser.Username} is not available.");
         result.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
     }
 
     [Fact]
     public async Task RegisterAsync_Should_Return_Status200OK_When_Successful()
     {
-        var userLogin = _fixture.Create<UserLogin>();
+        var newUser = _fixture.Create<NewUser>();
 
         _userRepositoryMock
             .Setup(mock => mock.RetrieveByUsernameAsync(
                 It.IsAny<string>()))
             .ReturnsAsync(null as User);
         
-        var result = await _sut.RegisterAsync(userLogin);
+        var result = await _sut.RegisterAsync(newUser);
 
         result.Data.Should().NotBeNull();
-        result.Data?.Username.Should().Be(userLogin.Username);
+        result.Data?.Username.Should().Be(newUser.Username);
         result.ErrorMessage.Should().BeNull();
         result.StatusCode.Should().Be(StatusCodes.Status200OK);
     }

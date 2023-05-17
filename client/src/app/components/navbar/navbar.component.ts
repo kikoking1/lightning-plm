@@ -9,7 +9,9 @@ export class NavbarComponent {
   constructor() {}
 
   navLinks = [
-    { path: '/home', label: 'Home' },
-    { path: '/products', label: 'Products' },
+    // { path: '/home', label: 'Home' },
+    // { path: '/products', label: 'Products' },
+    { path: '/auth/login', label: 'Login' },
+    { path: '/auth/register', label: 'Register' },
   ];
 }

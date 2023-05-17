@@ -4,6 +4,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { ProductListComponent } from './components/products/product-list/product-list.component';
 import { ProductAddComponent } from './components/products/product-add/product-add.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { RegisterComponent } from './components/auth/register/register.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -12,7 +14,10 @@ const routes: Routes = [
     component: ProductListComponent,
     pathMatch: 'full',
   },
-  { path: 'products/add', component: ProductAddComponent, pathMatch: 'full' },
+  { path: 'products/add', component: ProductAddComponent },
+  { path: 'auth/login', component: LoginComponent },
+  { path: 'auth/register', component: RegisterComponent },
+
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];

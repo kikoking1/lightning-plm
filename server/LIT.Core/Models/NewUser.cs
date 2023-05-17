@@ -1,9 +1,10 @@
-namespace LIT.Core.Models;
+﻿namespace LIT.Core.Models;
 
-public class UserDto
+public class NewUser
 {
     public Guid Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Username { get; set; }
+    public string Password { get; set; }
 }

@@ -4,6 +4,6 @@ namespace LIT.Core.Interfaces;
 
 public interface IUserService
 {
-    Task<ResultType<UserDto>> RegisterAsync(UserLogin user);
+    Task<ResultType<UserDto>> RegisterAsync(NewUser user);
     Task<ResultType<LoginTokens>> LoginAsync(UserLogin userLogin);
 }

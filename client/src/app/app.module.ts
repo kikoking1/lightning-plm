@@ -11,9 +11,20 @@ import { HomeComponent } from './pages/home/home.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { ProductListComponent } from './components/products/product-list/product-list.component';
 import { ProductAddComponent } from './components/products/product-add/product-add.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { RegisterComponent } from './components/auth/register/register.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, HomeComponent, PageNotFoundComponent, ProductListComponent, ProductAddComponent],
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    HomeComponent,
+    PageNotFoundComponent,
+    ProductListComponent,
+    ProductAddComponent,
+    LoginComponent,
+    RegisterComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -24,9 +24,9 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<UserDto>> RegisterAsync(UserLogin userLogin)
+    public async Task<ActionResult<UserDto>> RegisterAsync(NewUser newUser)
     {
-        var result = await _userService.RegisterAsync(userLogin);
+        var result = await _userService.RegisterAsync(newUser);
         return StatusCode(result.StatusCode, result.ErrorMessage ?? (object) result.Data);
     }
 

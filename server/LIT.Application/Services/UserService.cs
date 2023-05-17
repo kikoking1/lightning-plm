@@ -28,34 +28,36 @@ public class UserService : IUserService
         _tokenService = tokenService;
     }
 
-    public async Task<ResultType<UserDto>> RegisterAsync(UserLogin userLogin)
+    public async Task<ResultType<UserDto>> RegisterAsync(NewUser newUser)
     {
-        var existingUser = await _userRepository.RetrieveByUsernameAsync(userLogin.Username);
+        var existingUser = await _userRepository.RetrieveByUsernameAsync(newUser.Username);
         
         if (existingUser != null)
         {
             return new ResultType<UserDto>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                ErrorMessage = $"User with username: {userLogin.Username} is not available.",
+                ErrorMessage = $"User with username: {newUser.Username} is not available.",
             };
         }
 
         var passwordHash
-            = BCrypt.Net.BCrypt.HashPassword(userLogin.Password);
+            = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
         
-        var newUser = new User
+        var user = new User
         {
             Id = Guid.NewGuid(),
-            Username = userLogin.Username,
+            Username = newUser.Username,
+            FirstName = newUser.FirstName,
+            LastName = newUser.LastName,
             PasswordHash = passwordHash,
             DateCreated = DateTime.UtcNow,
             DateModified = DateTime.UtcNow,
         };
 
-        await _userRepository.AddAsync(newUser);
+        await _userRepository.AddAsync(user);
         
-        var userDto = _mapper.Map<UserDto>(newUser);
+        var userDto = _mapper.Map<UserDto>(user);
         
         return new ResultType<UserDto>
         {
