@@ -37,7 +37,7 @@ public class UserService : IUserService
             return new ResultType<UserDto>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                ErrorMessage = $"User with username: {newUser.Username} is not available.",
+                ErrorMessage = new APIError{ ErrorMessage = $"User with username: {newUser.Username} is not available." }
             };
         }
 
@@ -75,7 +75,7 @@ public class UserService : IUserService
             return new ResultType<LoginTokens>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                ErrorMessage = FailedLoginMessage,
+                ErrorMessage = new APIError{ ErrorMessage = FailedLoginMessage }
             };
         }
 
@@ -84,7 +84,7 @@ public class UserService : IUserService
             return new ResultType<LoginTokens>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                ErrorMessage = FailedLoginMessage,
+                ErrorMessage = new APIError{ ErrorMessage = FailedLoginMessage }
             };
         }
 

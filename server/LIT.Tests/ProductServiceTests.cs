@@ -103,7 +103,7 @@ public class ProductServiceTests
             .Returns(new ResultType<Guid>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                ErrorMessage = "User is not logged in."
+                ErrorMessage = new APIError { ErrorMessage = "User is not logged in." }
             });
 
         var result = await _sut.AddAsync(product);

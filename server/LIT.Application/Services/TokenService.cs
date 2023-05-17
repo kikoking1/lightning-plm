@@ -32,7 +32,7 @@ public class TokenService : ITokenService
             return new ResultType<Guid>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                ErrorMessage = "User is not logged in."
+                ErrorMessage = new APIError{ ErrorMessage = "User is not logged in." }
             };
         }
 
@@ -43,7 +43,7 @@ public class TokenService : ITokenService
             return new ResultType<Guid>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                ErrorMessage = "User is not logged in."
+                ErrorMessage = new APIError{ ErrorMessage = "User is not logged in." }
             };
         }
 
@@ -115,7 +115,7 @@ public class TokenService : ITokenService
             return new ResultType<LoginTokens>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                ErrorMessage = errorMessage
+                ErrorMessage = new APIError{ ErrorMessage = errorMessage }
             };
         }
         
@@ -126,7 +126,7 @@ public class TokenService : ITokenService
             return new ResultType<LoginTokens>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                ErrorMessage = errorMessage
+                ErrorMessage = new APIError{ ErrorMessage = errorMessage }
             };
         }
 

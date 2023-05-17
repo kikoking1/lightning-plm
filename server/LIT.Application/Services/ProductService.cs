@@ -30,7 +30,7 @@ public class ProductService : IProductService
             return new ResultType<Product>
             {
                 StatusCode = StatusCodes.Status404NotFound,
-                ErrorMessage = $"Product with id: {id} does not exist",
+                ErrorMessage = new APIError{ErrorMessage = $"Product with id: {id} does not exist"}
             };
         }
         
@@ -61,7 +61,7 @@ public class ProductService : IProductService
             return new ResultType<Product>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                ErrorMessage = "Product body cannot be empty",
+                ErrorMessage = new APIError{ ErrorMessage = "Product body cannot be empty"},
             };
         }
         
@@ -71,7 +71,7 @@ public class ProductService : IProductService
             return new ResultType<Product>
             {
                 StatusCode = userIdResult.StatusCode,
-                ErrorMessage = userIdResult.ErrorMessage,
+                ErrorMessage = userIdResult.ErrorMessage
             };
         }
         
@@ -107,7 +107,7 @@ public class ProductService : IProductService
             return new ResultType<Product>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                ErrorMessage = "Product id cannot be null",
+                ErrorMessage = new APIError{ ErrorMessage = "Product id cannot be null" }
             };
         }
         
@@ -118,7 +118,7 @@ public class ProductService : IProductService
             return new ResultType<Product>
             {
                 StatusCode = StatusCodes.Status404NotFound,
-                ErrorMessage = $"No productwith id: {product.Id} exists",
+                ErrorMessage = new APIError{ ErrorMessage = $"No productwith id: {product.Id} exists" }
             };
         }
         

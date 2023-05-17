@@ -5,6 +5,8 @@ import { Subject, catchError } from 'rxjs';
 import { apiURL } from 'src/app/common/global-constants';
 import { UserLogin } from './login/user-login';
 import { NewUser } from './register/new-user';
+import { AuthInterceptor } from 'src/app/interceptors/auth.interceptor';
+import { JWTToken } from 'src/app/common/models/JWTToken';
 
 @Injectable({
   providedIn: 'root',
@@ -20,12 +22,6 @@ export class AuthService {
   register(user: NewUser) {
     this.http
       .post<NewUser>(`${this.authUrl}/register`, user)
-      .pipe(
-        catchError((err) => {
-          this.errorMessageSubject.next(err);
-          return [];
-        })
-      )
       .subscribe((user) => {
         console.log(user);
         this.router.navigate(['/auth/login']);
@@ -34,15 +30,9 @@ export class AuthService {
 
   login(userLogin: UserLogin) {
     this.http
-      .post<UserLogin>(`${this.authUrl}/login`, userLogin)
-      .pipe(
-        catchError((err) => {
-          this.errorMessageSubject.next(err);
-          return [];
-        })
-      )
+      .post<JWTToken>(`${this.authUrl}/login`, userLogin)
       .subscribe((res) => {
-        console.log(res);
+        AuthInterceptor.accessToken = res.token;
         this.router.navigate(['/products']);
       });
   }

@@ -34,7 +34,7 @@ public class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<string>> LoginAsync(UserLogin userLogin)
+    public async Task<ActionResult<JWTToken>> LoginAsync(UserLogin userLogin)
     {
         var result = await _userService.LoginAsync(userLogin);
 
@@ -43,14 +43,14 @@ public class AuthController : ControllerBase
             Response.Cookies.Append("X-Refresh-Token", result.Data.RefreshToken, new CookieOptions() { HttpOnly = true, SameSite = _sameSiteMode, Secure = true });
         }
 
-        return StatusCode(result.StatusCode, result.ErrorMessage ?? (object) result.Data?.AccessToken);
+        return StatusCode(result.StatusCode, result.ErrorMessage ?? (object) new JWTToken{ Token = result.Data?.AccessToken });
     }
     
     [HttpGet("refresh")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<string>> RefreshTokenAsync()
+    public async Task<ActionResult<JWTToken>> RefreshTokenAsync()
     {
         if (!Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken))
             return BadRequest();
@@ -66,10 +66,10 @@ public class AuthController : ControllerBase
     }
     
     [HttpGet("logout")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult<string> Logout()
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public ActionResult Logout()
     {
         Response.Cookies.Append("X-Refresh-Token", "", new CookieOptions() { Expires = DateTime.Now.AddDays(-1), HttpOnly = true, SameSite = _sameSiteMode, Secure = true});
-        return StatusCode(StatusCodes.Status200OK);
+        return StatusCode(StatusCodes.Status204NoContent);
     }
 }
