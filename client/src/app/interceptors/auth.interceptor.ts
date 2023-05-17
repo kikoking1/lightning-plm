@@ -8,11 +8,13 @@ import {
   HttpClient,
 } from '@angular/common/http';
 import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { apiURL } from '../common/global-constants';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   static accessToken = '';
   refresh = false;
+  private readonly authUrl = apiURL + 'Auth';
 
   constructor(private http: HttpClient) {}
 
@@ -32,11 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
           this.refresh = true;
 
           return this.http
-            .post(
-              'http://localhost:8000/api/refresh',
-              {},
-              { withCredentials: true }
-            )
+            .get(this.authUrl + '/refresh', { withCredentials: true })
             .pipe(
               switchMap((res: any) => {
                 AuthInterceptor.accessToken = res.token;
