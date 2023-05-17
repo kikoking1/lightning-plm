@@ -17,7 +17,7 @@ public class ProductService : IProductService
         _tokenService = tokenService;
     }
 
-    public async Task<ResultType<Product>> RetrieveByIdAsync(Guid id)
+    public async Task<ResultType<Product>> RetrieveByIdAsync(int id)
     {
         var sessionUserIdResult = _tokenService.GetSessionUserId();
         
@@ -131,7 +131,7 @@ public class ProductService : IProductService
         };
     }
     
-    public ResultType<object> Delete(Guid id)
+    public ResultType<object> Delete(int id)
     {
         _productRepository.Delete(id);
         

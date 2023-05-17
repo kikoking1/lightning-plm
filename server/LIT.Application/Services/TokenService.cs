@@ -25,11 +25,11 @@ public class TokenService : ITokenService
         _userRepository = userRepository;
     }
 
-    public ResultType<Guid> GetSessionUserId()
+    public ResultType<int> GetSessionUserId()
     {
         if(_httpContextAccessor.HttpContext == null)
         {
-            return new ResultType<Guid>
+            return new ResultType<int>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
                 ErrorMessage = new APIError{ ErrorMessage = "User is not logged in." }
@@ -38,18 +38,16 @@ public class TokenService : ITokenService
 
         var userIdStr = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         
-        if (string.IsNullOrWhiteSpace(userIdStr))
+        if (string.IsNullOrWhiteSpace(userIdStr) || !int.TryParse(userIdStr, out var userId))
         {
-            return new ResultType<Guid>
+            return new ResultType<int>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
                 ErrorMessage = new APIError{ ErrorMessage = "User is not logged in." }
             };
         }
-
-        var userId = Guid.Parse(userIdStr);
-
-        return new ResultType<Guid>
+        
+        return new ResultType<int>
         {
             StatusCode = StatusCodes.Status200OK,
             Data = userId
@@ -141,7 +139,7 @@ public class TokenService : ITokenService
         };
     }
 
-    private (bool isValid, Guid? userId) ValidateRefreshToken(string refreshToken)
+    private (bool isValid, int? userId) ValidateRefreshToken(string refreshToken)
     {
         var tokenValidationParameters = new TokenValidationParameters
         {
@@ -160,17 +158,11 @@ public class TokenService : ITokenService
         
         var userIdStr = claim.FindFirstValue(ClaimTypes.NameIdentifier);
         
-        if (string.IsNullOrWhiteSpace(userIdStr))
+        if (string.IsNullOrWhiteSpace(userIdStr) || !int.TryParse(userIdStr, out var userId))
         {
             return (false, null);
         }
-
-        //check if userId is valid guid
-        if (!Guid.TryParse(userIdStr, out var userId))
-        {
-            return (false, null);
-        }
-        
+  
         return (true, userId);
     }
 }

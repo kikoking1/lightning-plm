@@ -39,8 +39,8 @@ public class TokenServiceTests
 
         var result = _sut.GetSessionUserId();
 
-        result.Data.Should().BeEmpty();
-        result.ErrorMessage.Should().Be("User is not logged in.");
+        result.Data.Should().Be(0);
+        result.ErrorMessage?.ErrorMessage.Should().Be("User is not logged in.");
         result.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
     }
     
@@ -53,8 +53,8 @@ public class TokenServiceTests
 
         var result = _sut.GetSessionUserId();
 
-        result.Data.Should().BeEmpty();
-        result.ErrorMessage.Should().Be("User is not logged in.");
+        result.Data.Should().Be(0);
+        result.ErrorMessage?.ErrorMessage.Should().Be("User is not logged in.");
         result.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
     }
     
@@ -67,8 +67,8 @@ public class TokenServiceTests
 
         var result = _sut.GetSessionUserId();
 
-        result.Data.Should().NotBeEmpty();
-        result.ErrorMessage.Should().BeNull();
+        result.Data.Should().BeGreaterThan(0);
+        result.ErrorMessage?.ErrorMessage.Should().BeNull();
         result.StatusCode.Should().Be(StatusCodes.Status200OK);
     }
     
@@ -83,7 +83,7 @@ public class TokenServiceTests
     
     private DefaultHttpContext CreateExpectedDefaultHttpContext()
     {
-        var userIdString = _fixture.Create<Guid>().ToString(); 
+        var userIdString = _fixture.Create<int>().ToString(); 
         var context = new DefaultHttpContext();
         
         var claims = new[]

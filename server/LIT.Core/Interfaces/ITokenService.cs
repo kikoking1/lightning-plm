@@ -4,7 +4,7 @@ namespace LIT.Core.Interfaces;
 
 public interface ITokenService
 {
-    ResultType<Guid> GetSessionUserId();
+    ResultType<int> GetSessionUserId();
     string CreateAccessToken(User user);
     string CreateRefreshToken(User user);
     Task<ResultType<LoginTokens>> RefreshLoginTokensAsync(string refreshToken);

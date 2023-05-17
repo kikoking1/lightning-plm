@@ -47,7 +47,7 @@ public class UserServiceTests
         var result = await _sut.RegisterAsync(newUser);
 
         result.Data.Should().BeNull();
-        result.ErrorMessage.Should().Be($"User with username: {newUser.Username} is not available.");
+        result.ErrorMessage?.ErrorMessage.Should().Be($"User with username: {newUser.Username} is not available.");
         result.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
     }
 
@@ -65,7 +65,7 @@ public class UserServiceTests
 
         result.Data.Should().NotBeNull();
         result.Data?.Username.Should().Be(newUser.Username);
-        result.ErrorMessage.Should().BeNull();
+        result.ErrorMessage?.ErrorMessage.Should().BeNull();
         result.StatusCode.Should().Be(StatusCodes.Status200OK);
     }
     
@@ -82,7 +82,7 @@ public class UserServiceTests
         var result = await _sut.LoginAsync(userLogin);
 
         result.Data.Should().BeNull();
-        result.ErrorMessage.Should().Be("Invalid username or password.");
+        result.ErrorMessage?.ErrorMessage.Should().Be("Invalid username or password.");
         result.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
     }
     
@@ -108,7 +108,7 @@ public class UserServiceTests
         var result = await _sut.LoginAsync(userLogin);
 
         result.Data.Should().BeNull();
-        result.ErrorMessage.Should().Be("Invalid username or password.");
+        result.ErrorMessage?.ErrorMessage.Should().Be("Invalid username or password.");
         result.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
     }
     
@@ -135,7 +135,7 @@ public class UserServiceTests
         var result = await _sut.LoginAsync(userLogin);
 
         result.Data.Should().NotBeNull();
-        result.ErrorMessage.Should().BeNull();
+        result.ErrorMessage?.ErrorMessage.Should().BeNull();
         result.StatusCode.Should().Be(StatusCodes.Status200OK);
     }
 }

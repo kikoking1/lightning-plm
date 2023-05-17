@@ -23,7 +23,7 @@ public class ProductController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<Product>> RetrieveProductByIdAsync(Guid id)
+    public async Task<ActionResult<Product>> RetrieveProductByIdAsync(int id)
     {
         var result = await _productService.RetrieveByIdAsync(id);
         return StatusCode(result.StatusCode, result.ErrorMessage ?? (object) result.Data);
@@ -65,7 +65,7 @@ public class ProductController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult DeleteProduct(Guid id)
+    public ActionResult DeleteProduct(int id)
     {
         var result = _productService.Delete(id);
         return StatusCode(result.StatusCode, result.ErrorMessage ?? result.Data);

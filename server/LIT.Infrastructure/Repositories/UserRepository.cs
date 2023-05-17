@@ -15,7 +15,7 @@ public class UserRepository : IUserRepository
         _litDbContext = litDbContext;
     }
     
-    public async Task<User?> GetByIdAsync(Guid userId)
+    public async Task<User?> GetByIdAsync(int userId)
     {
         return await _litDbContext.Users
             .FirstOrDefaultAsync(entity => entity.Id == userId);

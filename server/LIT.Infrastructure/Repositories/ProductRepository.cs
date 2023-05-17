@@ -14,7 +14,7 @@ public class ProductRepository : IProductRepository
         _litDbContext = litDbContext;
     }
 
-    public async Task<Product?> RetrieveByIdAsync(Guid id, Guid userId)
+    public async Task<Product?> RetrieveByIdAsync(int id, int userId)
     {
         return await _litDbContext.Products
             .Where(product => product.Id == id)
@@ -22,7 +22,7 @@ public class ProductRepository : IProductRepository
             .FirstOrDefaultAsync();
     }
     
-    public async Task<List<Product>> RetrieveAsync(Guid userId)
+    public async Task<List<Product>> RetrieveAsync(int userId)
     {
         return await _litDbContext.Products
             .OrderByDescending(b => b.DateCreated)
@@ -32,7 +32,6 @@ public class ProductRepository : IProductRepository
     
     public async Task AddAsync(Product product)
     {
-        product.Id = Guid.NewGuid();
         product.DateCreated = DateTime.UtcNow;
         product.DateModified = DateTime.UtcNow;
 
@@ -48,7 +47,7 @@ public class ProductRepository : IProductRepository
         await _litDbContext.SaveChangesAsync();
     }
     
-    public void Delete(Guid id)
+    public void Delete(int id)
     {
         _litDbContext.Remove(_litDbContext.Products.Single(a => a.Id == id));
         _litDbContext.SaveChanges();

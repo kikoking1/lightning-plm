@@ -4,9 +4,9 @@ namespace LIT.Core.Interfaces;
 
 public interface IProductRepository
 {
-    Task<Product?> RetrieveByIdAsync(Guid id, Guid userId);
-    Task<List<Product>> RetrieveAsync(Guid userId);
+    Task<Product?> RetrieveByIdAsync(int id, int userId);
+    Task<List<Product>> RetrieveAsync(int userId);
     Task AddAsync(Product product);
     Task UpdateAsync(Product product);
-    void Delete(Guid id);
+    void Delete(int id);
 }
