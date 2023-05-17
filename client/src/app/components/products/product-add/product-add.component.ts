@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product } from '../product';
 import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-product-add',
@@ -10,10 +11,13 @@ import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 })
 export class ProductAddComponent {
   productAddForm!: FormGroup;
-  product = new Product();
   productNameDisplay$: Observable<string> | undefined;
+  errorMessage$: Observable<string> | undefined;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private productService: ProductService
+  ) {}
 
   ngOnInit(): void {
     this.productAddForm = this.fb.group({
@@ -22,10 +26,11 @@ export class ProductAddComponent {
 
     this.productNameDisplay$ =
       this.productAddForm.controls['name']?.valueChanges;
+
+    this.errorMessage$ = this.productService.errorMessage$;
   }
 
   save(): void {
-    console.log(this.productAddForm);
-    console.log('Saved: ' + JSON.stringify(this.productAddForm.value));
+    this.productService.addProduct(this.productAddForm.value as Product);
   }
 }

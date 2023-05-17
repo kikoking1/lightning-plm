@@ -1,3 +1,3 @@
-export class Product {
-  constructor(public name: string = '') {}
+export interface Product {
+  name: string;
 }
