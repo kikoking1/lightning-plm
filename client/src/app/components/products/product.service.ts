@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 export class ProductService {
   productUrl = apiURL + 'Product';
 
+  products$ = this.http.get<Product[]>(`${this.productUrl}/0/100`);
+
   private errorMessageSubject = new Subject<string>();
   errorMessage$ = this.errorMessageSubject.asObservable();
 
