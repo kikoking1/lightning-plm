@@ -5,7 +5,7 @@
     application that allows you to manage your products and their associated
     data.
   </p>
-  <div class="row">
+  <div class="row" *ngIf="notLoggedIn$ | async">
     <div class="col-lg-6 mb-3 px-0">
       <app-login></app-login>
     </div>

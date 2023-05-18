@@ -29,9 +29,12 @@ export class AuthService {
       .post<NewUser>(`${this.authUrl}/register`, user, {
         withCredentials: true,
       })
-      .subscribe((user) => {
-        console.log(user);
-        this.router.navigate(['/auth/login']);
+      .subscribe((res) => {
+        const userLogin: UserLogin = {
+          username: user.username,
+          password: user.password,
+        };
+        this.login(userLogin);
       });
   }
 
@@ -53,7 +56,7 @@ export class AuthService {
       .subscribe(() => {
         AuthInterceptor.accessToken = '';
         this.authSubject.next(AuthInterceptor.isLoggedIn());
-        this.router.navigate(['/auth/login']);
+        this.router.navigate(['/home']);
       });
   }
 
