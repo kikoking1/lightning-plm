@@ -56,4 +56,13 @@ export class AuthService {
         this.router.navigate(['/home']);
       });
   }
+
+  refresh() {
+    this.http
+      .get(`${this.authUrl}/refresh`, { withCredentials: true })
+      .subscribe((res: any) => {
+        AuthInterceptor.accessToken = res.token;
+        this.authSubject.next(AuthInterceptor.isLoggedIn());
+      });
+  }
 }
