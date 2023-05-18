@@ -53,7 +53,7 @@ export class AuthService {
       .subscribe(() => {
         AuthInterceptor.accessToken = '';
         this.authSubject.next(AuthInterceptor.isLoggedIn());
-        this.router.navigate(['/home']);
+        this.router.navigate(['/auth/login']);
       });
   }
 
