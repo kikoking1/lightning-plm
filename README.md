@@ -2,18 +2,21 @@ NOTE: This project can be viewed live at [https://lightningplm.com/](https://lig
 
 # Initial Deployment Setup on a New Ubuntu ec2 Server
 
-REQUIRES: ubuntu 20.04 ec2 t2.small instance (defaults on the rest)
+REQUIRES: ubuntu 20.04 ec2 t2.small instance (defaults on the rest). Uses .NET 7.0, which does NOT work on ubuntu version 22.04 at the time of writing this.
 
 make sure your domain is pointed at the server's ip address before trying to do the certbot let's encrypt ssl step
 
 ## Connect to Instance and Download Repo, Then Execute Server Setup Bash File
 
 ```
-ssh -i "C:\Users\kiko\.ssh\kikos_aws\aws_mth_key.pem" ubuntu@ec2-35-183-103-185.ca-central-1.compute.amazonaws.com
+ssh -i "C:\Users\kiko\.ssh\kikos_aws\aws_mth_key.pem" ubuntu@ec2-35-183-0-106.ca-central-1.compute.amazonaws.com
 
 # once connected, execute the following
 sudo -s
 apt update && apt upgrade -y
+reboot
+# at this point you'll have to reconnect and re sudo -s
+sudo -s
 cd /home/ubuntu/
 mkdir apps
 cd apps
@@ -30,7 +33,7 @@ Put in a real email, say yes twice, and it should be live
 # Deployment Updates Ubuntu ec2 Server
 
 ```
-ssh -i "C:\Users\kiko\.ssh\kikos_aws\aws_mth_key.pem" ubuntu@ec2-35-183-103-185.ca-central-1.compute.amazonaws.com
+ssh -i "C:\Users\kiko\.ssh\kikos_aws\aws_mth_key.pem" ubuntu@ec2-35-183-0-106.ca-central-1.compute.amazonaws.com
 
 # once connected, execute the following
 sudo -s
