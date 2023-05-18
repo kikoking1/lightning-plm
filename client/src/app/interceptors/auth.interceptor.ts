@@ -18,6 +18,10 @@ export class AuthInterceptor implements HttpInterceptor {
 
   constructor(private http: HttpClient) {}
 
+  static isLoggedIn() {
+    return !!AuthInterceptor.accessToken;
+  }
+
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler

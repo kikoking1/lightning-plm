@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, catchError } from 'rxjs';
+import { BehaviorSubject, Subject, tap } from 'rxjs';
 import { apiURL } from 'src/app/common/global-constants';
 import { UserLogin } from './login/user-login';
 import { NewUser } from './register/new-user';
@@ -12,7 +12,12 @@ import { JWTToken } from 'src/app/common/models/JWTToken';
   providedIn: 'root',
 })
 export class AuthService {
-  authUrl = apiURL + 'Auth';
+  private readonly authUrl = apiURL + 'Auth';
+
+  private authSubject: Subject<boolean> = new BehaviorSubject<boolean>(
+    AuthInterceptor.isLoggedIn()
+  );
+  authAction$ = this.authSubject.asObservable();
 
   private errorMessageSubject = new Subject<string>();
   errorMessage$ = this.errorMessageSubject.asObservable();
@@ -37,7 +42,18 @@ export class AuthService {
       })
       .subscribe((res) => {
         AuthInterceptor.accessToken = res.token;
+        this.authSubject.next(AuthInterceptor.isLoggedIn());
         this.router.navigate(['/products']);
+      });
+  }
+
+  logout() {
+    this.http
+      .get(`${this.authUrl}/logout`, { withCredentials: true })
+      .subscribe(() => {
+        AuthInterceptor.accessToken = '';
+        this.authSubject.next(AuthInterceptor.isLoggedIn());
+        this.router.navigate(['/home']);
       });
   }
 }

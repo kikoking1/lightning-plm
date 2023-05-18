@@ -2,13 +2,27 @@
   <div class="container">
     <a class="navbar-brand" href="#">Lightning PLM</a>
     <ul class="navbar-nav d-none d-md-block">
-      <li class="nav-item d-inline-block px-2" *ngFor="let navLink of navLinks">
+      <li
+        class="nav-item d-inline-block px-2"
+        *ngFor="let navLink of navLinks$ | async"
+      >
         <a
+          *ngIf="navLink['label'] !== 'Logout'"
+          role="button"
           class="nav-link"
           aria-current="page"
-          [routerLink]="[navLink.path]"
+          [routerLink]="navLink['path']"
           routerLinkActive="active"
-          >{{ navLink.label }}</a
+          >{{ navLink["label"] }}</a
+        >
+        <a
+          *ngIf="navLink['label'] === 'Logout'"
+          role="button"
+          class="nav-link"
+          aria-current="page"
+          routerLinkActive="active"
+          (click)="logout()"
+          >{{ navLink["label"] }}</a
         >
       </li>
     </ul>
@@ -39,13 +53,24 @@
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <li class="nav-item" *ngFor="let navLink of navLinks">
+          <li class="nav-item" *ngFor="let navLink of navLinks$ | async">
             <a
+              *ngIf="navLink['label'] !== 'Logout'"
+              role="button"
               class="nav-link"
               aria-current="page"
-              [routerLink]="[navLink.path]"
+              [routerLink]="navLink['path']"
               routerLinkActive="active"
-              >{{ navLink.label }}</a
+              >{{ navLink["label"] }}</a
+            >
+            <a
+              *ngIf="navLink['label'] === 'Logout'"
+              role="button"
+              class="nav-link"
+              aria-current="page"
+              routerLinkActive="active"
+              (click)="logout()"
+              >{{ navLink["label"] }}</a
             >
           </li>
         </ul>
