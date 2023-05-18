@@ -5,15 +5,12 @@
     application that allows you to manage your products and their associated
     data.
   </p>
-  <div class="px-2 py-3 w-100">
-    <div class="w-50 mx-auto my-5">
-      <a class="btn btn-success d-block m-2" [routerLink]="['/auth/register']"
-        >Register</a
-      >
-
-      <a class="btn btn-primary d-block m-2" [routerLink]="['/auth/login']"
-        >Login</a
-      >
+  <div class="row">
+    <div class="col-lg-6 mb-3 px-0">
+      <app-login></app-login>
+    </div>
+    <div class="col-lg-6 mb-3 px-0">
+      <app-register></app-register>
     </div>
   </div>
 </div>
