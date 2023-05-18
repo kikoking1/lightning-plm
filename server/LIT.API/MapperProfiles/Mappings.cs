@@ -10,6 +10,7 @@ public class Mappings : Profile
         CreateMap<User, UserDto>();
         CreateMap<UserDto, User>();
         CreateMap<NewUser, User>();
-        
+        CreateMap<Product, ProductDto>();
+        CreateMap<ProductDto, Product>();
     }
 }

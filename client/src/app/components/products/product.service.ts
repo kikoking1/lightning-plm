@@ -38,9 +38,33 @@ export class ProductService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  addProduct(newProduct?: Product) {
+  getById(id: number) {
+    return this.http.get<Product>(`${this.productUrl}/${id}`).pipe(
+      catchError((err) => {
+        this.errorMessageSubject.next(err);
+        return [];
+      })
+    );
+  }
+
+  add(newProduct?: Product) {
     this.http
       .post<Product>(`${this.productUrl}`, newProduct)
+      .pipe(
+        catchError((err) => {
+          this.errorMessageSubject.next(err);
+          return [];
+        })
+      )
+      .subscribe((product) => {
+        console.log(product);
+        this.router.navigate(['/products']);
+      });
+  }
+
+  edit(newProduct?: Product) {
+    this.http
+      .put<Product>(`${this.productUrl}`, newProduct)
       .pipe(
         catchError((err) => {
           this.errorMessageSubject.next(err);

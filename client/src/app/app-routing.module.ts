@@ -6,6 +6,7 @@ import { ProductListComponent } from './components/products/product-list/product
 import { ProductAddComponent } from './components/products/product-add/product-add.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
+import { ProductEditComponent } from './components/products/product-edit/product-edit.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   { path: 'products/add', component: ProductAddComponent },
+  { path: 'products/:id', component: ProductEditComponent },
   { path: 'auth/login', component: LoginComponent },
   { path: 'auth/register', component: RegisterComponent },
 

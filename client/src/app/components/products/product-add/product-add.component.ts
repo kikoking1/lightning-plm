@@ -31,6 +31,6 @@ export class ProductAddComponent {
   }
 
   save(): void {
-    this.productService.addProduct(this.productAddForm.value as Product);
+    this.productService.add(this.productAddForm.value as Product);
   }
 }

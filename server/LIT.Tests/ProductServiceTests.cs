@@ -1,5 +1,7 @@
 using AutoFixture;
+using AutoMapper;
 using FluentAssertions;
+using LIT.API.MapperProfiles;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using LIT.Application.Services;
@@ -15,14 +17,16 @@ public class ProductServiceTests
     private readonly Mock<IProductRepository> _productRepositoryMock;
     private readonly Mock<ITokenService> _tokenServiceMock;
     private readonly Fixture _fixture;
+    private readonly IMapper _mapper;
 
     public ProductServiceTests()
     {
         _fixture = new Fixture();
         _productRepositoryMock = new Mock<IProductRepository>();
         _tokenServiceMock = new Mock<ITokenService>();
+        _mapper = new Mapper(new MapperConfiguration(config => config.AddProfile<Mappings>()));
         
-        _sut = new ProductService(_productRepositoryMock.Object, _tokenServiceMock.Object);
+        _sut = new ProductService(_productRepositoryMock.Object, _tokenServiceMock.Object, _mapper);
     }
     
     [Fact]
@@ -108,23 +112,23 @@ public class ProductServiceTests
     }
     
     [Fact]
-    public async Task AddAsync_Should_Return_Status400BadRequest_When_Product_Body_Is_Empty()
+    public async Task AddAsync_Should_Return_Status400BadRequest_When_Product_Name_Is_Empty()
     {
-        var product= _fixture.Build<Product>()
+        var productDto = _fixture.Build<ProductDto>()
             .With(x => x.Name, String.Empty)
             .Create();
 
-        var result = await _sut.AddAsync(product);
+        var result = await _sut.AddAsync(productDto);
 
         result.Data.Should().BeNull();
-        result.ErrorMessage?.ErrorMessage.Should().Be("Product body cannot be empty");
+        result.ErrorMessage?.ErrorMessage.Should().Be("Product name cannot be empty");
         result.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
     }    
     
     [Fact]
     public async Task AddAsync_Should_Return_Status400BadRequest_When_GetSessionUserId_Fails_With_Status400BadRequest()
     {
-        var product= _fixture.Build<Product>()
+        var productDto = _fixture.Build<ProductDto>()
             .With(x => x.Name, _fixture.Create<string>())
             .Create();
 
@@ -136,7 +140,7 @@ public class ProductServiceTests
                 ErrorMessage = new APIError { ErrorMessage = "User is not logged in." }
             });
 
-        var result = await _sut.AddAsync(product);
+        var result = await _sut.AddAsync(productDto);
 
         result.Data.Should().BeNull();
         result.ErrorMessage?.ErrorMessage.Should().Be("User is not logged in.");
@@ -146,7 +150,7 @@ public class ProductServiceTests
     [Fact]
     public async Task AddAsync_Should_Return_Status200OK_When_Product_Body_Is_Filled()
     {
-        var product= _fixture.Build<Product>()
+        var productDto = _fixture.Build<ProductDto>()
             .With(x => x.Name, _fixture.Create<string>())
             .Create();
         
@@ -160,11 +164,10 @@ public class ProductServiceTests
                 Data = userId
             });
 
-        var result = await _sut.AddAsync(product);
+        var result = await _sut.AddAsync(productDto);
 
         result.Data.Should().NotBeNull();
-        result.Data?.Name.Should().Be(product.Name);
-        result.Data?.UserId.Should().Be(userId);
+        result.Data?.Name.Should().Be(productDto.Name);
         result.ErrorMessage?.ErrorMessage.Should().BeNull();
         result.StatusCode.Should().Be(StatusCodes.Status200OK);
     }
@@ -182,11 +185,11 @@ public class ProductServiceTests
                 Data = userId
             });
         
-        var product = _fixture.Build<Product>()
+        var productDto = _fixture.Build<ProductDto>()
             .With(x => x.Id, null as int?)
             .Create();
 
-        var result = await _sut.UpdateAsync(product);
+        var result = await _sut.UpdateAsync(productDto);
 
         result.Data.Should().BeNull();
         result.ErrorMessage?.ErrorMessage.Should().Be("Product id cannot be null");
@@ -206,17 +209,17 @@ public class ProductServiceTests
                 Data = userId
             });
         
-        var product= _fixture.Build<Product>().Create();
+        var productDto = _fixture.Build<ProductDto>().Create();
         
         _productRepositoryMock
             .Setup(mock => mock.RetrieveByIdAsync(
                 It.IsAny<int>(), It.IsAny<int>()))
             .ReturnsAsync(null as Product);
         
-        var result = await _sut.UpdateAsync(product);
+        var result = await _sut.UpdateAsync(productDto);
 
         result.Data.Should().BeNull();
-        result.ErrorMessage?.ErrorMessage.Should().Be($"No productwith id: {product.Id} exists");
+        result.ErrorMessage?.ErrorMessage.Should().Be($"No product with id: {productDto.Id} exists");
         result.StatusCode.Should().Be(StatusCodes.Status404NotFound);
     }
     
@@ -233,19 +236,18 @@ public class ProductServiceTests
                 Data = userId
             });
         
-        var product = _fixture.Build<Product>().Create();
+        var productDto = _fixture.Build<ProductDto>().Create();
+        var product = _mapper.Map<Product>(productDto);
         
         _productRepositoryMock
             .Setup(mock => mock.RetrieveByIdAsync(
                 It.IsAny<int>(), It.IsAny<int>()))
             .ReturnsAsync(product);
         
-        var result = await _sut.UpdateAsync(product);
+        var result = await _sut.UpdateAsync(productDto);
 
         result.Data.Should().NotBeNull();
-        result.Data?.UserId.Should().Be(product.UserId);
-        result.Data?.DateCreated.Should().Be(product.DateCreated);
-        result.Data?.DateModified.Should().Be(product.DateModified);
+        result.Data?.Name.Should().Be(productDto.Name);
         result.ErrorMessage?.ErrorMessage.Should().BeNull();
         result.StatusCode.Should().Be(StatusCodes.Status200OK);
     }

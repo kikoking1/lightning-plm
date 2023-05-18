@@ -23,7 +23,7 @@ public class ProductController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<Product>> RetrieveProductByIdAsync(int id)
+    public async Task<ActionResult<ProductDto>> RetrieveProductByIdAsync(int id)
     {
         var result = await _productService.RetrieveByIdAsync(id);
         return StatusCode(result.StatusCode, result.ErrorMessage ?? (object) result.Data);
@@ -34,7 +34,7 @@ public class ProductController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<Product>> RetrieveProductsAsync()
+    public async Task<ActionResult<ProductDto>> RetrieveProductsAsync()
     {
         var result = await _productService.RetrieveAsync();
         return StatusCode(result.StatusCode, result.ErrorMessage ?? (object) result.Data);
@@ -44,9 +44,9 @@ public class ProductController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<Product>> AddProdudct([FromBody] Product product)
+    public async Task<ActionResult<ProductDto>> AddProdudct([FromBody] ProductDto productDto)
     {
-        var result = await _productService.AddAsync(product);
+        var result = await _productService.AddAsync(productDto);
         return StatusCode(result.StatusCode, result.ErrorMessage ?? (object) result.Data);
     }
 
@@ -54,9 +54,9 @@ public class ProductController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<Product>> UpdateProductAsync([FromBody] Product product)
+    public async Task<ActionResult<ProductDto>> UpdateProductAsync([FromBody] ProductDto productDto)
     {
-        var result = await _productService.UpdateAsync(product);
+        var result = await _productService.UpdateAsync(productDto);
         return StatusCode(result.StatusCode, result.ErrorMessage ?? (object) result.Data);
     }
     

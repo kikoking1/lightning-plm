@@ -1,0 +1,55 @@
+<div class="container">
+  <h1>Update Product</h1>
+  <form
+    novalidate
+    (ngSubmit)="save()"
+    [formGroup]="productEditForm"
+    *ngIf="productEditForm"
+  >
+    <input type="hidden" id="id" formControlName="id" />
+
+    <div class="mb-3 form-group">
+      <label for="name" class="form-label">Product Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        formControlName="name"
+        [ngClass]="{
+          'is-invalid':
+            (productEditForm.get('name')?.touched ||
+              productEditForm.get('name')?.dirty) &&
+            !productEditForm.get('name')?.valid
+        }"
+      />
+    </div>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="!productEditForm.valid"
+    >
+      Update
+    </button>
+  </form>
+
+  <div
+    *ngIf="errorMessage$ | async as errorMessag"
+    class="toast"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div class="toast-header">
+      <strong class="me-auto">Error</strong>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="toast-body">
+      {{ errorMessag }}
+    </div>
+  </div>
+</div>

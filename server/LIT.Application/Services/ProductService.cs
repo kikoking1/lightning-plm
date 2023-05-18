@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using LIT.Core.Interfaces;
 using LIT.Core.Models;
@@ -8,67 +9,74 @@ public class ProductService : IProductService
 {
     private readonly IProductRepository _productRepository;
     private readonly ITokenService _tokenService;
+    private readonly IMapper _mapper;
 
     public ProductService(
         IProductRepository productRepository,
-        ITokenService tokenService)
+        ITokenService tokenService,
+        IMapper mapper)
     {
         _productRepository = productRepository;
         _tokenService = tokenService;
+        _mapper = mapper;
     }
 
-    public async Task<ResultType<Product>> RetrieveByIdAsync(int id)
+    public async Task<ResultType<ProductDto>> RetrieveByIdAsync(int id)
     {
         var sessionUserIdResult = _tokenService.GetSessionUserId();
         
         var userId = sessionUserIdResult.Data;
         
-        var product= await _productRepository.RetrieveByIdAsync(id, userId);
+        var product = await _productRepository.RetrieveByIdAsync(id, userId);
         
-        if (product== null)
+        if (product == null)
         {
-            return new ResultType<Product>
+            return new ResultType<ProductDto>
             {
                 StatusCode = StatusCodes.Status404NotFound,
                 ErrorMessage = new APIError{ErrorMessage = $"Product with id: {id} does not exist"}
             };
         }
         
-        return new ResultType<Product>
+        var productDto = _mapper.Map<ProductDto>(product);
+        
+        return new ResultType<ProductDto>
         {
             StatusCode = StatusCodes.Status200OK,
-            Data = product
+            Data = productDto
         };
     }    
     
-    public async Task<ResultType<List<Product>>> RetrieveAsync()
+    public async Task<ResultType<List<ProductDto>>> RetrieveAsync()
     {
         var sessionUserIdResult = _tokenService.GetSessionUserId();
         
         var userId = sessionUserIdResult.Data;
 
-        return new ResultType<List<Product>>
+        var productDtos = _mapper.Map<List<ProductDto>>(await _productRepository.RetrieveAsync(userId));
+
+        return new ResultType<List<ProductDto>>
         {
             StatusCode = StatusCodes.Status200OK,
-            Data = await _productRepository.RetrieveAsync(userId)
+            Data = productDtos
         };
     }
     
-    public async Task<ResultType<Product>> AddAsync(Product product)
+    public async Task<ResultType<ProductDto>> AddAsync(ProductDto productDto)
     {
-        if (product.Name == String.Empty)
+        if (productDto.Name == String.Empty)
         {
-            return new ResultType<Product>
+            return new ResultType<ProductDto>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                ErrorMessage = new APIError{ ErrorMessage = "Product body cannot be empty"},
+                ErrorMessage = new APIError{ ErrorMessage = "Product name cannot be empty"},
             };
         }
         
         var userIdResult = _tokenService.GetSessionUserId();
         if (userIdResult.ErrorMessage != null)
         {
-            return new ResultType<Product>
+            return new ResultType<ProductDto>
             {
                 StatusCode = userIdResult.StatusCode,
                 ErrorMessage = userIdResult.ErrorMessage
@@ -76,24 +84,27 @@ public class ProductService : IProductService
         }
         
         var userId = userIdResult.Data;
+        var product = _mapper.Map<Product>(productDto);
         product.UserId = userId;
         
         await _productRepository.AddAsync(product);
         
-        return new ResultType<Product>
+        productDto = _mapper.Map<ProductDto>(product);
+        
+        return new ResultType<ProductDto>
         {
             StatusCode = StatusCodes.Status200OK,
-            Data = product
+            Data = productDto
         };
     }
     
-    public async Task<ResultType<Product>> UpdateAsync(Product product)
+    public async Task<ResultType<ProductDto>> UpdateAsync(ProductDto productDto)
     {
         var sessionUserIdResult = _tokenService.GetSessionUserId();
         
         if (sessionUserIdResult.ErrorMessage != null)
         {
-            return new ResultType<Product>
+            return new ResultType<ProductDto>
             {
                 StatusCode = sessionUserIdResult.StatusCode,
                 ErrorMessage = sessionUserIdResult.ErrorMessage
@@ -102,32 +113,35 @@ public class ProductService : IProductService
         
         var userId = sessionUserIdResult.Data;
         
-        if (product.Id == null)
+        if (productDto.Id == null)
         {
-            return new ResultType<Product>
+            return new ResultType<ProductDto>
             {
                 StatusCode = StatusCodes.Status400BadRequest,
                 ErrorMessage = new APIError{ ErrorMessage = "Product id cannot be null" }
             };
         }
         
-        var existingProduct = await _productRepository.RetrieveByIdAsync(product.Id.Value, userId);
+        var existingProduct = await _productRepository.RetrieveByIdAsync(productDto.Id.Value, userId);
 
         if (existingProduct == null)
         {
-            return new ResultType<Product>
+            return new ResultType<ProductDto>
             {
                 StatusCode = StatusCodes.Status404NotFound,
-                ErrorMessage = new APIError{ ErrorMessage = $"No productwith id: {product.Id} exists" }
+                ErrorMessage = new APIError{ ErrorMessage = $"No product with id: {productDto.Id} exists" }
             };
         }
         
+        var product = _mapper.Map(productDto, existingProduct);
         await _productRepository.UpdateAsync(product);
+        
+        productDto = _mapper.Map<ProductDto>(product);
 
-        return new ResultType<Product>
+        return new ResultType<ProductDto>
         {
             StatusCode = StatusCodes.Status200OK,
-            Data = product,
+            Data = productDto,
         };
     }
     
