@@ -10,12 +10,16 @@
       <tr>
         <th scope="col">Id</th>
         <th scope="col">Name</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let product of products$ | async">
         <th scope="row">{{ product.id }}</th>
         <td>{{ product.name }}</td>
+        <td (click)="delete(product.id!)">
+          <i role="button" class="bi bi-trash text-danger"></i>
+        </td>
       </tr>
     </tbody>
   </table>

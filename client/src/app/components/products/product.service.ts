@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Product } from './product';
 import { HttpClient } from '@angular/common/http';
-import { Subject, catchError } from 'rxjs';
+import { BehaviorSubject, Subject, catchError, combineLatest, map } from 'rxjs';
 import { apiURL } from 'src/app/common/global-constants';
 import { Router } from '@angular/router';
+import { EntityAction } from 'src/app/common/interfaces/entity-action';
+import { EntityActionType } from 'src/app/common/enums/entity-action-type';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +13,25 @@ import { Router } from '@angular/router';
 export class ProductService {
   productUrl = apiURL + 'Product';
 
-  products$ = this.http.get<Product[]>(`${this.productUrl}/0/100`);
+  private productActionSubject = new BehaviorSubject<EntityAction>({
+    action: EntityActionType.Load,
+    payload: null,
+  } as EntityAction);
+
+  productAction$ = this.productActionSubject.asObservable();
+
+  products$ = combineLatest([
+    this.http.get<Product[]>(`${this.productUrl}/0/100`),
+    this.productAction$,
+  ]).pipe(
+    map(([products, eAction]) => {
+      if (eAction.action === EntityActionType.Delete) {
+        return products.filter((product) => product.id !== eAction.payload);
+      } else {
+        return products;
+      }
+    })
+  );
 
   private errorMessageSubject = new Subject<string>();
   errorMessage$ = this.errorMessageSubject.asObservable();
@@ -31,5 +51,14 @@ export class ProductService {
         console.log(product);
         this.router.navigate(['/products']);
       });
+  }
+
+  delete(id: number) {
+    this.http.delete(`${this.productUrl}/${id}`).subscribe(() => {
+      this.productActionSubject.next({
+        action: EntityActionType.Delete,
+        payload: id,
+      } as EntityAction);
+    });
   }
 }

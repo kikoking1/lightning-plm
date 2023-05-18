@@ -12,4 +12,8 @@ export class ProductListComponent {
   constructor(private productService: ProductService) {}
 
   ngOnInit() {}
+
+  delete(id: number) {
+    this.productService.delete(id);
+  }
 }
