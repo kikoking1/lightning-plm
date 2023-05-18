@@ -13,6 +13,6 @@ systemctl restart lightningplm.service
 # rebuild and restart angular app
 cd /home/ubuntu/apps/lightningplm-app/lightning-plm/client
 npm i
-npm run build
+ng build
 
 systemctl restart nginx

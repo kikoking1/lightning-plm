@@ -23,7 +23,7 @@ cd apps
 mkdir lightningplm-app
 cd lightningplm-app
 git clone https://github.com/kikoking1/lightning-plm.git
-bash /home/ubuntu/apps/lightningplm-app/lightningplm/devops/new-ubuntu-server-setup.sh
+bash /home/ubuntu/apps/lightningplm-app/lightning-plm/devops/new-ubuntu-server-setup.sh
 ```
 
 NOTE: the only prompts should be the certbot prompts at the very end.
@@ -39,9 +39,9 @@ ssh -i "C:\Users\kiko\.ssh\kikos_aws\aws_mth_key.pem" ubuntu@ec2-35-183-0-106.ca
 sudo -s
 
 # get latest version of app from github
-cd /home/ubuntu/apps/lightningplm-app/lightningplm/
+cd /home/ubuntu/apps/lightningplm-app/lightning-plm/
 git pull
 
 # let the updated devops file take care of the rest
-bash /home/ubuntu/apps/lightningplm-app/lightningplm/devops/deploy-updates-to-ubuntu-server.sh
+bash /home/ubuntu/apps/lightningplm-app/lightning-plm/devops/deploy-updates-to-ubuntu-server.sh
 ```
