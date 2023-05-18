@@ -10,7 +10,7 @@ echo -E "$(jq --arg secret_key "$(uuidgen)" --arg secret_refresh_key "$(uuidgen)
 
 systemctl restart lightningplm.service
 
-# rebuild and restart react app
+# rebuild and restart angular app
 cd /home/ubuntu/apps/lightningplm-app/lightningplm/client
 npm i
 npm run build

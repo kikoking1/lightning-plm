@@ -7,12 +7,15 @@ apt-get install -y nodejs
 apt-get install jq -y
 apt install sqlite3
 
-#build react app
+#install angular cli
+npm install -g @angular/cli
+
+#build angular app
 cd /home/ubuntu/apps/lightningplm-app/lightningplm/client
 npm i
-npm run build
+ng build
 
-#install nginx and configure to serve react app. Also configure nginx to proxy api calls to dotnet app. Then start nginx
+#install nginx and configure to serve angular app. Also configure nginx to proxy api calls to dotnet app. Then start nginx
 apt install nginx -y
 systemctl enable nginx
 cd /etc/nginx/sites-available
@@ -22,7 +25,7 @@ server {
         listen 80;
         listen [::]:80;
 
-         root /home/ubuntu/apps/lightningplm-app/lightningplm/client/build;
+         root /home/ubuntu/apps/lightningplm-app/lightningplm/client/dist/lightning-plm;
 
         # Add index.php to the list if you are using PHP
         index index.html index.htm index.nginx-debian.html;
