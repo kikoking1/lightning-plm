@@ -58,8 +58,8 @@ apt-get update && apt-get install -y dotnet-sdk-7.0
 dotnet publish --configuration Release
 
 # change jwt secret key to random guid
-cd /home/ubuntu/apps/lightningplm-app/lightningplm/server/MTT.API/bin/Release/net7.0/publish/
-appsettingsPath="/home/ubuntu/apps/lightningplm-app/lightningplm/server/MTT.API/bin/Release/net7.0/publish/appsettings.json"
+cd /home/ubuntu/apps/lightningplm-app/lightningplm/server/LIT.API/bin/Release/net7.0/publish/
+appsettingsPath="/home/ubuntu/apps/lightningplm-app/lightningplm/server/LIT.API/bin/Release/net7.0/publish/appsettings.json"
 echo -E "$(jq --arg secret_key "$(uuidgen)" --arg secret_refresh_key "$(uuidgen)" '.AuthSettings.JwtSigningKey |= $secret_key | .AuthSettings.JwtRefreshTokenSigningKey |= $secret_refresh_key' ${appsettingsPath})" > ${appsettingsPath}
 
 touch /etc/systemd/system/lightningplm.service
@@ -67,8 +67,8 @@ touch /etc/systemd/system/lightningplm.service
 cat > /etc/systemd/system/lightningplm.service <<'endmsg'
 Description=Lightning PLM Dotnet App
 [Service]
-WorkingDirectory=/home/ubuntu/apps/lightningplm-app/lightningplm/server/MTT.API/bin/Release/net7.0/publish/
-ExecStart=/usr/bin/dotnet /home/ubuntu/apps/lightningplm-app/lightningplm/server/MTT.API/bin/Release/net7.0/publish/MTT.API.dll
+WorkingDirectory=/home/ubuntu/apps/lightningplm-app/lightningplm/server/LIT.API/bin/Release/net7.0/publish/
+ExecStart=/usr/bin/dotnet /home/ubuntu/apps/lightningplm-app/lightningplm/server/LIT.API/bin/Release/net7.0/publish/LIT.API.dll
 Restart=always
 # Restart service after 10 seconds if the dotnet service crashes:
 RestartSec=10
