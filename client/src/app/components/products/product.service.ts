@@ -11,6 +11,7 @@ import {
   merge,
   of,
   tap,
+  throttleTime,
   throwError,
 } from 'rxjs';
 import { apiURL } from 'src/app/common/global-constants';
@@ -37,6 +38,7 @@ export class ProductService {
   productsStream$ = merge(
     this.products$,
     this.productModifiedAction$.pipe(
+      throttleTime(500),
       concatMap((operation) => this.saveProduct(operation)),
       concatMap(() => this.getProducts())
     )
