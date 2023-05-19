@@ -5,11 +5,11 @@
       <form novalidate (ngSubmit)="save()" [formGroup]="userLoginForm">
         <div class="mb-3">
           <div class="form-group">
-            <label for="username" class="form-label">Username</label>
+            <label for="loginUsername" class="form-label">Username</label>
             <input
               type="text"
               class="form-control"
-              id="username"
+              id="loginUsername"
               formControlName="username"
               [ngClass]="{
                 'is-invalid':
@@ -20,11 +20,11 @@
             />
           </div>
           <div class="form-group">
-            <label for="password" class="form-label">Password</label>
+            <label for="loginPassword" class="form-label">Password</label>
             <input
               type="password"
               class="form-control"
-              id="password"
+              id="loginPassword"
               formControlName="password"
               aria-describedby="passwordHelpBlock"
               [ngClass]="{
