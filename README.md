@@ -13,10 +13,6 @@ ssh -i "C:\Users\kiko\.ssh\kikos_aws\aws_mth_key.pem" ubuntu@ec2-35-183-0-106.ca
 
 # once connected, execute the following
 sudo -s
-apt update && apt upgrade -y
-reboot
-# at this point you'll have to reconnect and re sudo -s
-sudo -s
 cd /home/ubuntu/
 mkdir apps
 cd apps
