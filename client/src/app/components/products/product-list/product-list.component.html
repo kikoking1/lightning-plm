@@ -5,13 +5,13 @@
     <a class="btn btn-primary" [routerLink]="['/products/add']">Add +</a>
   </div>
 
-  <table class="table">
+  <table id="productListTable" class="table">
     <thead>
       <tr>
         <th scope="col">Id</th>
         <th scope="col">Name</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Delete</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -25,7 +25,7 @@
             class="bi bi-pencil text-primary"
           ></i>
         </td>
-        <td (click)="delete(product.id!)">
+        <td (click)="delete(product)">
           <i role="button" class="bi bi-trash text-danger"></i>
         </td>
       </tr>

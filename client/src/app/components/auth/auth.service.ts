@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Subject, catchError, throwError } from 'rxjs';
 import { apiURL } from 'src/app/common/global-constants';
 import { UserLogin } from './login/user-login';
 import { NewUser } from './register/new-user';
@@ -20,7 +20,7 @@ export class AuthService {
   );
   authAction$ = this.authSubject.asObservable();
 
-  private errorMessageSubject = new Subject<string>();
+  private errorMessageSubject = new BehaviorSubject<string>('');
   errorMessage$ = this.errorMessageSubject.asObservable();
 
   constructor(

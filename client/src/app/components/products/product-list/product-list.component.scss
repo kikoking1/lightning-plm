@@ -1,0 +1,8 @@
+#productListTable {
+  td:nth-last-child(-n + 2) {
+    text-align: center;
+    width: 90px;
+    margin-right: 20px;
+    padding-right: 20px;
+  }
+}

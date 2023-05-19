@@ -1,19 +1,26 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { UserLogin } from './user-login';
 import { LoadingService } from 'src/app/common/services/loading.service';
+import { combineLatest, map } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
   userLoginForm!: FormGroup;
-  errorMessage$ = this.authService.errorMessage$;
-  isLoading$ = this.loadingService.isLoading$;
+
+  vm$ = combineLatest([
+    this.authService.errorMessage$,
+    this.loadingService.isLoading$,
+  ]).pipe(
+    map(([errorMessage, isLoading]) => ({
+      errorMessage,
+      isLoading,
+    }))
+  );
 
   constructor(
     private fb: FormBuilder,

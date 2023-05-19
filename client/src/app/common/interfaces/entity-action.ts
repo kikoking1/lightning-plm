@@ -1,6 +1,6 @@
-import { EntityActionType } from '../enums/entity-action-type';
+type ActionType = 'add' | 'update' | 'delete' | 'none';
 
-export interface EntityAction {
-  action: EntityActionType;
-  payload: any;
+export interface Action<T> {
+  item: T;
+  action: ActionType;
 }

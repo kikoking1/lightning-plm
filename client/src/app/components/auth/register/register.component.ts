@@ -7,11 +7,10 @@ import { NewUser } from './new-user';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
   userRegisterForm!: FormGroup;
-  errorMessage$: Observable<string> | undefined;
+  errorMessage$ = this.authService.errorMessage$;
 
   constructor(private fb: FormBuilder, private authService: AuthService) {}
 
@@ -30,8 +29,6 @@ export class RegisterComponent {
         ],
       ],
     });
-
-    this.errorMessage$ = this.authService.errorMessage$;
   }
 
   save(): void {
