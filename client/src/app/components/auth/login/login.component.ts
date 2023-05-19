@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { UserLogin } from './user-login';
+import { LoadingService } from 'src/app/common/services/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +12,14 @@ import { UserLogin } from './user-login';
 })
 export class LoginComponent {
   userLoginForm!: FormGroup;
-  errorMessage$: Observable<string> | undefined;
+  errorMessage$ = this.authService.errorMessage$;
+  isLoading$ = this.loadingService.isLoading$;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private loadingService: LoadingService
+  ) {}
 
   ngOnInit(): void {
     this.userLoginForm = this.fb.group({
@@ -28,8 +34,6 @@ export class LoginComponent {
         ],
       ],
     });
-
-    this.errorMessage$ = this.authService.errorMessage$;
   }
 
   save(): void {

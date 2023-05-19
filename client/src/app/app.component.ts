@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './components/auth/auth.service';
+import { LoadingService } from './common/services/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,12 @@ import { AuthService } from './components/auth/auth.service';
 export class AppComponent {
   title = 'lightning-plm';
 
-  constructor(private authService: AuthService) {}
+  isLoading$ = this.LoadingService.isLoading$;
+
+  constructor(
+    private authService: AuthService,
+    private LoadingService: LoadingService
+  ) {}
 
   ngOnInit() {
     this.authService.refresh();

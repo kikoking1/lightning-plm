@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
 import { ActivatedRoute } from '@angular/router';
+import { LoadingService } from 'src/app/common/services/loading.service';
 
 @Component({
   selector: 'app-product-edit',
@@ -18,10 +19,12 @@ export class ProductEditComponent {
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
+    private loadingService: LoadingService,
     private activatedRoute: ActivatedRoute
   ) {}
 
   async ngOnInit(): Promise<void> {
+    this.loadingService.setLoading(true);
     const id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
 
     this.productEditForm = this.fb.group({
@@ -31,6 +34,7 @@ export class ProductEditComponent {
 
     this.productService.getById(id).subscribe((product) => {
       this.productEditForm.setValue(product);
+      this.loadingService.setLoading(false);
     });
 
     this.errorMessage$ = this.productService.errorMessage$;
