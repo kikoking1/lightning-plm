@@ -4,3 +4,37 @@
 #navbar-mobile-toggle-btn {
   border: none;
 }
+
+#primaryNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-weight: 400;
+  font-size: 17px;
+
+  #brandLink {
+    max-width: 200px;
+    padding-top: 6px;
+  }
+  #toolbar-inner {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+.nav-links-desktop {
+}
+
+@media (min-width: 768px) {
+  .mobile-nav-toggle {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .nav-links-desktop {
+    display: none;
+  }
+}
