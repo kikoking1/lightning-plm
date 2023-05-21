@@ -24,7 +24,33 @@
   }
 }
 
-.nav-links-desktop {
+#mobile-nav {
+  background: white;
+  border-left: rgba(0, 0, 0, 0.09) 1px solid;
+  width: 300px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: -300px;
+  z-index: 1000000;
+  transition: right 0.5s;
+
+  li {
+    list-style: none;
+    cursor: pointer;
+
+    a {
+      color: #333;
+      text-decoration: none;
+      padding: 10px 20px;
+      display: block;
+      border-bottom: rgba(0, 0, 0, 0.09) 1px solid;
+    }
+  }
+}
+
+#mobile-nav.open {
+  right: 0;
 }
 
 @media (min-width: 768px) {
