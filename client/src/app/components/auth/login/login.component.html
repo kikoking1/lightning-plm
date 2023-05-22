@@ -1,91 +1,67 @@
 <div class="container">
-  <div class="card px-5 py-3">
-    <div>
-      <mat-card class="card">
-        <mat-card-header>
-          <mat-card-title>Login</mat-card-title>
-        </mat-card-header>
-        <form novalidate (ngSubmit)="save()" [formGroup]="userLoginForm">
-          <mat-card-content>
-            <div class="mb-3">
-              <div>
-                <mat-form-field>
-                  <mat-label>Username</mat-label>
-                  <input
-                    matInput
-                    #input
-                    placeholder="example@mail.com"
-                    type="text"
-                    id="loginUsername"
-                    formControlName="username"
-                    [ngClass]="{
-                      'is-invalid':
-                        (userLoginForm.get('username')?.touched ||
-                          userLoginForm.get('username')?.dirty) &&
-                        !userLoginForm.get('username')?.valid
-                    }"
-                  />
-                </mat-form-field>
-              </div>
-              <div>
-                <mat-form-field>
-                  <mat-label>Password</mat-label>
-                  <input
-                    matInput
-                    #input
-                    type="text"
-                    id="loginPassword"
-                    formControlName="password"
-                    [ngClass]="{
-                      'is-invalid':
-                        (userLoginForm.get('password')?.touched ||
-                          userLoginForm.get('password')?.dirty) &&
-                        !userLoginForm.get('password')?.valid
-                    }"
-                  />
-                  <mat-hint
-                    >Must contain at least one uppercase letter, one lowercase
-                    letter, one number, and between 8 to 24
-                    characters.</mat-hint
-                  >
-                </mat-form-field>
-              </div>
+  <div>
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Login</mat-card-title>
+      </mat-card-header>
+      <form novalidate (ngSubmit)="save()" [formGroup]="userLoginForm">
+        <mat-card-content>
+          <div class="mb-3">
+            <div>
+              <mat-form-field>
+                <mat-label>Username</mat-label>
+                <input
+                  matInput
+                  #input
+                  placeholder="example@mail.com"
+                  type="text"
+                  id="loginUsername"
+                  formControlName="username"
+                  [ngClass]="{
+                    'is-invalid':
+                      (userLoginForm.get('username')?.touched ||
+                        userLoginForm.get('username')?.dirty) &&
+                      !userLoginForm.get('username')?.valid
+                  }"
+                />
+              </mat-form-field>
             </div>
-          </mat-card-content>
-          <mat-card-actions>
-            <button
-              mat-raised-button
-              color="primary"
-              type="submit"
-              class="btn btn-primary"
-              [disabled]="!userLoginForm.valid"
-            >
-              Login
-            </button>
-          </mat-card-actions>
-        </form>
-      </mat-card>
-
-      <div
-        *ngIf="errorMessage$ | async as errorMessage"
-        class="toast"
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-      >
-        <div class="toast-header">
-          <strong class="me-auto">Error</strong>
+            <div>
+              <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input
+                  matInput
+                  #input
+                  type="password"
+                  id="loginPassword"
+                  formControlName="password"
+                  [ngClass]="{
+                    'is-invalid':
+                      (userLoginForm.get('password')?.touched ||
+                        userLoginForm.get('password')?.dirty) &&
+                      !userLoginForm.get('password')?.valid
+                  }"
+                />
+                <mat-hint
+                  >Must contain at least one uppercase letter, one lowercase
+                  letter, one number, and between 8 to 24 characters.</mat-hint
+                >
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
           <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="toast"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="toast-body">
-          {{ errorMessage }}
-        </div>
-      </div>
-    </div>
+            mat-raised-button
+            color="primary"
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!userLoginForm.valid"
+          >
+            Login
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card>
   </div>
 </div>

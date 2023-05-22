@@ -22,6 +22,8 @@ body {
 
 .card {
   padding: 15px 30px;
+  margin-top: 12px;
+  margin-bottom: 12px;
 
   mat-card-content,
   mat-card-header,
@@ -32,4 +34,24 @@ body {
 
 mat-form-field {
   width: 100%;
+}
+
+.row {
+  display: flex;
+  gap: 15px;
+  flex-grow: 1;
+  margin-right: -15px;
+  margin-left: -15px;
+  & > [class^="col"] {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+}
+
+@media (max-width: 767px) {
+  .row {
+    display: block;
+  }
 }

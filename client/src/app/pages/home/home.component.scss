@@ -1,0 +1,9 @@
+.home-auth-row {
+  & > .col:first-child {
+    margin-right: -15px;
+  }
+
+  & > .col:last-child {
+    margin-left: -15px;
+  }
+}
