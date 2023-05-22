@@ -12,21 +12,9 @@ import { combineLatest, map } from 'rxjs';
 export class LoginComponent {
   userLoginForm!: FormGroup;
 
-  vm$ = combineLatest([
-    this.authService.errorMessage$,
-    this.loadingService.isLoading$,
-  ]).pipe(
-    map(([errorMessage, isLoading]) => ({
-      errorMessage,
-      isLoading,
-    }))
-  );
+  errorMessage$ = this.authService.errorMessage$;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private loadingService: LoadingService
-  ) {}
+  constructor(private fb: FormBuilder, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.userLoginForm = this.fb.group({

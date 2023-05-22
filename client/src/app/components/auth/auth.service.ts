@@ -97,7 +97,6 @@ export class AuthService {
       .get(`${this.authUrl}/refresh`, { withCredentials: true })
       .pipe(
         catchError((err) => {
-          this.errorMessageSubject.next(err.error);
           this.loadingService.setLoading(false);
           return throwError(() => new Error(err.error));
         })
