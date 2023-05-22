@@ -5,7 +5,10 @@
     >
 
     <ul class="nav-links-desktop">
-      <li *ngFor="let navLink of navLinks$ | async">
+      <li
+        *ngFor="let navLink of navLinks$ | async"
+        style="display: inline-block"
+      >
         <a
           *ngIf="navLink['label'] !== 'Logout'"
           [routerLink]="navLink['path']"

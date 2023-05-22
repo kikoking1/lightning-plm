@@ -15,12 +15,26 @@
 
   #brandLink {
     max-width: 200px;
-    padding-top: 6px;
+    height: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
+    display: block;
   }
   #toolbar-inner {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    li {
+      list-style: none;
+
+      a {
+        cursor: pointer;
+        color: white;
+        text-decoration: none;
+        padding: 10px 14px;
+        border-bottom: rgba(0, 0, 0, 0.09) 1px solid;
+      }
+    }
   }
 }
 
