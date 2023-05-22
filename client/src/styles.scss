@@ -63,6 +63,7 @@ mat-form-field {
   td {
     padding: 0.75rem;
     border-bottom: 1px solid #dee2e6;
+    vertical-align: top;
     text-align: left;
   }
 }
@@ -75,6 +76,9 @@ mat-form-field {
 }
 
 @media (max-width: 767px) {
+  .card {
+    padding: 12px 15px;
+  }
   .row {
     display: block;
   }

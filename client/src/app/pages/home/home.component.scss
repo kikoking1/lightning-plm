@@ -1,9 +1,14 @@
-.home-auth-row {
-  & > .col:first-child {
-    margin-right: -15px;
-  }
+@media (min-width: 768px) {
+  .home-auth-row {
+    & > .col:first-child {
+      margin-right: -15px;
+    }
 
-  & > .col:last-child {
-    margin-left: -15px;
+    & > .col:last-child {
+      margin-left: -15px;
+    }
   }
+}
+
+@media (max-width: 767px) {
 }
