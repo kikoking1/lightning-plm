@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { UserLogin } from './user-login';
-import { LoadingService } from 'src/app/common/services/loading.service';
-import { combineLatest, map } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -12,21 +10,9 @@ import { combineLatest, map } from 'rxjs';
 export class LoginComponent {
   userLoginForm!: FormGroup;
 
-  vm$ = combineLatest([
-    this.authService.errorMessage$,
-    this.loadingService.isLoading$,
-  ]).pipe(
-    map(([errorMessage, isLoading]) => ({
-      errorMessage,
-      isLoading,
-    }))
-  );
+  errorMessage$ = this.authService.errorMessage$;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private loadingService: LoadingService
-  ) {}
+  constructor(private fb: FormBuilder, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.userLoginForm = this.fb.group({

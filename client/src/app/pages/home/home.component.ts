@@ -6,6 +6,7 @@ import { AuthInterceptor } from 'src/app/interceptors/auth.interceptor';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
   constructor(private authService: AuthService) {}

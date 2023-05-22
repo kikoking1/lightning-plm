@@ -5,11 +5,11 @@
     application that allows you to manage your products and their associated
     data.
   </p>
-  <div class="row" *ngIf="notLoggedIn$ | async">
-    <div class="col-lg-6 mb-3 px-0">
+  <div class="row home-auth-row" *ngIf="notLoggedIn$ | async">
+    <div class="col">
       <app-login></app-login>
     </div>
-    <div class="col-lg-6 mb-3 px-0">
+    <div class="col">
       <app-register></app-register>
     </div>
   </div>

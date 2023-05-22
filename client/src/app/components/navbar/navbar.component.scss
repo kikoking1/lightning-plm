@@ -4,3 +4,78 @@
 #navbar-mobile-toggle-btn {
   border: none;
 }
+
+#primaryNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-weight: 400;
+  font-size: 17px;
+
+  #brandLink {
+    max-width: 200px;
+    height: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
+    display: block;
+    cursor: pointer;
+  }
+  #toolbar-inner {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    li {
+      list-style: none;
+
+      a {
+        cursor: pointer;
+        color: white;
+        text-decoration: none;
+        padding: 10px 14px;
+        border-bottom: rgba(0, 0, 0, 0.09) 1px solid;
+      }
+    }
+  }
+}
+
+#mobile-nav {
+  background: white;
+  border-left: rgba(0, 0, 0, 0.09) 1px solid;
+  width: 300px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: -300px;
+  z-index: 1000000;
+  transition: right 0.5s;
+
+  li {
+    list-style: none;
+    cursor: pointer;
+
+    a {
+      color: #333;
+      text-decoration: none;
+      padding: 10px 20px;
+      display: block;
+      border-bottom: rgba(0, 0, 0, 0.09) 1px solid;
+    }
+  }
+}
+
+#mobile-nav.open {
+  right: 0;
+}
+
+@media (min-width: 768px) {
+  .mobile-nav-toggle {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .nav-links-desktop {
+    display: none;
+  }
+}

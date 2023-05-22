@@ -1,74 +1,67 @@
 <div class="container">
-  <div class="card px-5 py-3">
-    <h1>Login</h1>
-    <div *ngIf="vm$ | async as vm">
+  <div>
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Login</mat-card-title>
+      </mat-card-header>
       <form novalidate (ngSubmit)="save()" [formGroup]="userLoginForm">
-        <div class="mb-3">
-          <div class="form-group">
-            <label for="loginUsername" class="form-label">Username</label>
-            <input
-              type="text"
-              class="form-control"
-              id="loginUsername"
-              formControlName="username"
-              [ngClass]="{
-                'is-invalid':
-                  (userLoginForm.get('username')?.touched ||
-                    userLoginForm.get('username')?.dirty) &&
-                  !userLoginForm.get('username')?.valid
-              }"
-            />
+        <mat-card-content>
+          <div class="mb-3">
+            <div>
+              <mat-form-field>
+                <mat-label>Username</mat-label>
+                <input
+                  matInput
+                  #input
+                  placeholder="example@mail.com"
+                  type="text"
+                  id="loginUsername"
+                  formControlName="username"
+                  [ngClass]="{
+                    'is-invalid':
+                      (userLoginForm.get('username')?.touched ||
+                        userLoginForm.get('username')?.dirty) &&
+                      !userLoginForm.get('username')?.valid
+                  }"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input
+                  matInput
+                  #input
+                  type="password"
+                  id="loginPassword"
+                  formControlName="password"
+                  [ngClass]="{
+                    'is-invalid':
+                      (userLoginForm.get('password')?.touched ||
+                        userLoginForm.get('password')?.dirty) &&
+                      !userLoginForm.get('password')?.valid
+                  }"
+                />
+              </mat-form-field>
+              <span class="form-field-hint">
+                Must contain at least one uppercase letter, one lowercase
+                letter, one number, and between 8 to 24 characters.
+              </span>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="loginPassword" class="form-label">Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="loginPassword"
-              formControlName="password"
-              aria-describedby="passwordHelpBlock"
-              [ngClass]="{
-                'is-invalid':
-                  (userLoginForm.get('password')?.touched ||
-                    userLoginForm.get('password')?.dirty) &&
-                  !userLoginForm.get('password')?.valid
-              }"
-            />
-          </div>
-          <div id="passwordHelpBlock" class="form-text">
-            Must contain at least one uppercase letter, one lowercase letter,
-            one number, and between 8 to 24 characters.
-          </div>
-        </div>
-        <button
-          type="submit"
-          class="btn btn-primary"
-          [disabled]="!userLoginForm.valid"
-        >
-          Login
-        </button>
-      </form>
-
-      <div
-        *ngIf="vm.errorMessage"
-        class="toast"
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-      >
-        <div class="toast-header">
-          <strong class="me-auto">Error</strong>
+        </mat-card-content>
+        <mat-card-actions>
           <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="toast"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="toast-body">
-          {{ vm.errorMessage }}
-        </div>
-      </div>
-    </div>
+            mat-raised-button
+            color="primary"
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!userLoginForm.valid"
+          >
+            Login
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card>
   </div>
 </div>

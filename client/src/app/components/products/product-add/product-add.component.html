@@ -5,49 +5,34 @@
       >: {{ productNameDisplay }}</span
     >
   </h1>
-  <form novalidate (ngSubmit)="save()" [formGroup]="productAddForm">
-    <div class="mb-3">
-      <label for="name" class="form-label">Product Name</label>
-      <input
-        type="text"
-        class="form-control"
-        id="name"
-        formControlName="name"
-        [ngClass]="{
-          'is-invalid':
-            (productAddForm.get('name')?.touched ||
-              productAddForm.get('name')?.dirty) &&
-            !productAddForm.get('name')?.valid
-        }"
-      />
-    </div>
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="!productAddForm.valid"
-    >
-      Create
-    </button>
-  </form>
-
-  <div
-    *ngIf="errorMessage$ | async as errorMessag"
-    class="toast"
-    role="alert"
-    aria-live="assertive"
-    aria-atomic="true"
-  >
-    <div class="toast-header">
-      <strong class="me-auto">Error</strong>
+  <mat-card class="card">
+    <form novalidate (ngSubmit)="save()" [formGroup]="productAddForm">
+      <div>
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input
+            matInput
+            #input
+            type="text"
+            id="name"
+            formControlName="name"
+            [ngClass]="{
+              'is-invalid':
+                (productAddForm.get('name')?.touched ||
+                  productAddForm.get('name')?.dirty) &&
+                !productAddForm.get('name')?.valid
+            }"
+          />
+        </mat-form-field>
+      </div>
       <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="toast"
-        aria-label="Close"
-      ></button>
-    </div>
-    <div class="toast-body">
-      {{ errorMessag }}
-    </div>
-  </div>
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!productAddForm.valid"
+      >
+        Create
+      </button>
+    </form>
+  </mat-card>
 </div>

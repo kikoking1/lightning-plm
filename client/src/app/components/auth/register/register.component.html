@@ -1,102 +1,98 @@
 <div class="container">
-  <div class="card px-5 py-3">
-    <h1>Register</h1>
-    <form novalidate (ngSubmit)="save()" [formGroup]="userRegisterForm">
-      <div class="mb-3">
-        <div class="form-group">
-          <label for="firstname" class="form-label">First Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="firstname"
-            formControlName="firstname"
-            [ngClass]="{
-              'is-invalid':
-                (userRegisterForm.get('firstname')?.touched ||
-                  userRegisterForm.get('firstname')?.dirty) &&
-                !userRegisterForm.get('firstname')?.valid
-            }"
-          />
-        </div>
-        <div class="form-group">
-          <label for="lastname" class="form-label">Last Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="lastname"
-            formControlName="lastname"
-            [ngClass]="{
-              'is-invalid':
-                (userRegisterForm.get('lastname')?.touched ||
-                  userRegisterForm.get('lastname')?.dirty) &&
-                !userRegisterForm.get('lastname')?.valid
-            }"
-          />
-        </div>
-        <div class="form-group">
-          <label for="registerUsername" class="form-label">Username</label>
-          <input
-            type="text"
-            class="form-control"
-            id="registerUsername"
-            formControlName="username"
-            [ngClass]="{
-              'is-invalid':
-                (userRegisterForm.get('username')?.touched ||
-                  userRegisterForm.get('username')?.dirty) &&
-                !userRegisterForm.get('username')?.valid
-            }"
-          />
-        </div>
-        <div class="form-group">
-          <label for="registerPassword" class="form-label">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="registerPassword"
-            formControlName="password"
-            aria-describedby="passwordHelpBlock"
-            [ngClass]="{
-              'is-invalid':
-                (userRegisterForm.get('password')?.touched ||
-                  userRegisterForm.get('password')?.dirty) &&
-                !userRegisterForm.get('password')?.valid
-            }"
-          />
-        </div>
-        <div id="passwordHelpBlock" class="form-text">
-          Must contain at least one uppercase letter, one lowercase letter, one
-          number, and between 8 to 24 characters.
-        </div>
-      </div>
-      <button
-        type="submit"
-        class="btn btn-primary"
-        [disabled]="!userRegisterForm.valid"
-      >
-        Create
-      </button>
-    </form>
-
-    <div
-      *ngIf="errorMessage$ | async as errorMessag"
-      class="toast"
-      role="alert"
-      aria-live="assertive"
-      aria-atomic="true"
-    >
-      <div class="toast-header">
-        <strong class="me-auto">Error</strong>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="toast"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="toast-body">
-        {{ errorMessag }}
-      </div>
-    </div>
+  <div>
+    <mat-card class="card">
+      <mat-card-header>
+        <mat-card-title>Register</mat-card-title>
+      </mat-card-header>
+      <form novalidate (ngSubmit)="save()" [formGroup]="userRegisterForm">
+        <mat-card-content>
+          <div class="mb-3">
+            <div>
+              <mat-form-field>
+                <mat-label>First Name</mat-label>
+                <input
+                  matInput
+                  #input
+                  type="text"
+                  formControlName="firstname"
+                  [ngClass]="{
+                    'is-invalid':
+                      (userRegisterForm.get('firstname')?.touched ||
+                        userRegisterForm.get('firstname')?.dirty) &&
+                      !userRegisterForm.get('firstname')?.valid
+                  }"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Last Name</mat-label>
+                <input
+                  matInput
+                  #input
+                  type="text"
+                  formControlName="lastname"
+                  [ngClass]="{
+                    'is-invalid':
+                      (userRegisterForm.get('lastname')?.touched ||
+                        userRegisterForm.get('lastname')?.dirty) &&
+                      !userRegisterForm.get('lastname')?.valid
+                  }"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Username</mat-label>
+                <input
+                  matInput
+                  #input
+                  type="text"
+                  formControlName="username"
+                  [ngClass]="{
+                    'is-invalid':
+                      (userRegisterForm.get('username')?.touched ||
+                        userRegisterForm.get('username')?.dirty) &&
+                      !userRegisterForm.get('username')?.valid
+                  }"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input
+                  matInput
+                  #input
+                  type="password"
+                  id="loginPassword"
+                  formControlName="password"
+                  [ngClass]="{
+                    'is-invalid':
+                      (userRegisterForm.get('password')?.touched ||
+                        userRegisterForm.get('password')?.dirty) &&
+                      !userRegisterForm.get('password')?.valid
+                  }"
+                />
+              </mat-form-field>
+              <span class="form-field-hint">
+                Must contain at least one uppercase letter, one lowercase
+                letter, one number, and between 8 to 24 characters.
+              </span>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="!userRegisterForm.valid"
+          >
+            Register
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card>
   </div>
 </div>

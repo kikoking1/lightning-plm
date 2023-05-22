@@ -9,6 +9,7 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
+  mobileNavOpen: boolean = false;
   constructor(private authService: AuthService) {}
 
   navLinks$: Observable<Record<string, string>[]> =
