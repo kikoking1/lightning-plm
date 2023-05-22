@@ -1,11 +1,12 @@
-#globalLoaderContainer {
+#globalLoaderContainer,
+#globalErrorDialogue {
   height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 10000;
   width: 100vw;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(188, 186, 201, 0.96);
 
   & mat-spinner {
     position: absolute;
@@ -16,5 +17,58 @@
     margin: auto;
     height: 80px;
     width: 80px;
+  }
+}
+
+#globalErrorDialogue {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  width: 100vw;
+  background: rgba(188, 186, 201, 0.96);
+
+  & .error-dialogue-inner {
+    position: relative;
+  }
+
+  & mat-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    max-height: 320px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-width: 420px;
+
+    & mat-card-header {
+      color: red;
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 18px;
+      background: white;
+      width: 100%;
+    }
+    & mat-card-content {
+      min-height: 164px;
+    }
+    & mat-card-actions {
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0 18px 18px 18px;
+      background: white;
+      width: 100%;
+    }
+    & button {
+      margin-top: 30px;
+    }
   }
 }
