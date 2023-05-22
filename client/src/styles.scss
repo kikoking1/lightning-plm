@@ -43,6 +43,10 @@ mat-form-field {
   display: block;
 }
 
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background: none;
+}
+
 .row {
   display: flex;
   gap: 15px;
