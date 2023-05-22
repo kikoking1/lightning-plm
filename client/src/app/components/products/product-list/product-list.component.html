@@ -2,10 +2,12 @@
   <h1>Products List</h1>
 
   <div class="d-flex flex-row-reverse">
-    <a class="btn btn-primary" [routerLink]="['/products/add']">Add +</a>
+    <button mat-raised-button color="primary" [routerLink]="['/products/add']">
+      <mat-icon>add</mat-icon> Add
+    </button>
   </div>
 
-  <table id="productListTable" class="table">
+  <table id="productListTable" class="table mat-elevation-z8">
     <thead>
       <tr>
         <th scope="col">Id</th>
@@ -19,14 +21,17 @@
         <th scope="row">{{ product.id }}</th>
         <td>{{ product.name }}</td>
         <td>
-          <i
-            role="button"
+          <mat-icon
             [routerLink]="['/products', product.id]"
-            class="bi bi-pencil text-primary"
-          ></i>
+            color="primary"
+            class="mutate-icon"
+            >edit</mat-icon
+          >
         </td>
-        <td (click)="delete(product)">
-          <i role="button" class="bi bi-trash text-danger"></i>
+        <td>
+          <mat-icon (click)="delete(product)" color="warn" class="mutate-icon"
+            >delete</mat-icon
+          >
         </td>
       </tr>
     </tbody>
