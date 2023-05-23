@@ -1,5 +1,4 @@
-#globalLoaderContainer,
-#globalErrorDialogue {
+#globalLoaderContainer {
   height: 100vh;
   position: fixed;
   top: 0;
@@ -27,11 +26,12 @@
   z-index: 10000;
   width: 100vw;
   background: #edededf5;
-  & .error-dialogue-inner {
-    position: relative;
+
+  & h2 {
+    color: red;
   }
 
-  & mat-card {
+  & .error-dialogue-wrapper {
     position: absolute;
     top: 0;
     left: 0;
@@ -39,34 +39,18 @@
     right: 0;
     margin: auto;
     max-height: 320px;
-    overflow-y: scroll;
-    overflow-x: hidden;
     max-width: 420px;
+    background: white;
+    padding: 20px;
+    border-radius: 4px;
 
-    & mat-card-header {
-      color: red;
-      position: sticky;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: 20px 18px;
-      background: white;
-      width: 100%;
+    & .error-dialogue-content-body {
+      height: 228px;
+      overflow-y: scroll;
     }
-    & mat-card-content {
-      min-height: 164px;
-    }
-    & mat-card-actions {
-      position: sticky;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 0 18px 18px 18px;
-      background: white;
-      width: 100%;
-    }
-    & button {
-      margin-top: 30px;
-    }
+  }
+
+  & .error-dialogue-footer {
+    padding-top: 15px;
   }
 }
