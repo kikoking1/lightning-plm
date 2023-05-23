@@ -54,7 +54,10 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<JWTToken>> RefreshTokenAsync()
     {
         if (!Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken))
-            return NoContent();
+            return BadRequest(new APIError
+            {
+                ErrorMessage = "Login session expired."
+            });
         
         var result = await _tokenService.RefreshLoginTokensAsync(refreshToken);
         

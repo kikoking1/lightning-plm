@@ -6,8 +6,7 @@
   left: 0;
   z-index: 10000;
   width: 100vw;
-  background: rgba(188, 186, 201, 0.96);
-
+  background: #edededf5;
   & mat-spinner {
     position: absolute;
     top: 0;
@@ -27,8 +26,7 @@
   left: 0;
   z-index: 10000;
   width: 100vw;
-  background: rgba(188, 186, 201, 0.96);
-
+  background: #edededf5;
   & .error-dialogue-inner {
     position: relative;
   }

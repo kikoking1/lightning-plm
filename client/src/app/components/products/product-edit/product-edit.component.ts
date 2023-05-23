@@ -13,8 +13,6 @@ import { LoadingService } from 'src/app/common/services/loading.service';
 export class ProductEditComponent {
   productEditForm!: FormGroup;
 
-  errorMessage$: Observable<string> | undefined;
-
   private getByIdSub: Subscription | undefined;
 
   constructor(
@@ -35,8 +33,6 @@ export class ProductEditComponent {
     this.getByIdSub = this.productService.getById(id).subscribe((product) => {
       this.productEditForm.setValue(product);
     });
-
-    this.errorMessage$ = this.productService.errorMessage$;
   }
 
   save(): void {

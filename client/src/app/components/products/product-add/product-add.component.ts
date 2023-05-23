@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 export class ProductAddComponent {
   productAddForm!: FormGroup;
   productNameDisplay$: Observable<string> | undefined;
-  errorMessage$ = this.productService.errorMessage$;
 
   constructor(
     private fb: FormBuilder,

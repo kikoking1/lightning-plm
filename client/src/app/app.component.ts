@@ -23,4 +23,8 @@ export class AppComponent {
   ngOnInit() {
     this.authService.refresh();
   }
+
+  setErrorClosed() {
+    this.errorService.setError({ errorMessage: '' });
+  }
 }
