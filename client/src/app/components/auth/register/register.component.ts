@@ -9,11 +9,9 @@ import { NewUser } from './new-user';
   templateUrl: './register.component.html',
 })
 export class RegisterComponent {
-  userRegisterForm!: FormGroup;
+  userRegisterForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
-
-  ngOnInit(): void {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.userRegisterForm = this.fb.group({
       firstname: ['', [Validators.required]],
       lastname: ['', [Validators.required]],

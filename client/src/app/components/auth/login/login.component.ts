@@ -8,11 +8,9 @@ import { UserLogin } from './user-login';
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
-  userLoginForm!: FormGroup;
+  userLoginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
-
-  ngOnInit(): void {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.userLoginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
       password: [
