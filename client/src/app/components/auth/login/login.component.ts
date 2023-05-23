@@ -10,8 +10,6 @@ import { UserLogin } from './user-login';
 export class LoginComponent {
   userLoginForm!: FormGroup;
 
-  errorMessage$ = this.authService.errorMessage$;
-
   constructor(private fb: FormBuilder, private authService: AuthService) {}
 
   ngOnInit(): void {

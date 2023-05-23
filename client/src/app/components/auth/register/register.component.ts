@@ -10,7 +10,6 @@ import { NewUser } from './new-user';
 })
 export class RegisterComponent {
   userRegisterForm!: FormGroup;
-  errorMessage$ = this.authService.errorMessage$;
 
   constructor(private fb: FormBuilder, private authService: AuthService) {}
 

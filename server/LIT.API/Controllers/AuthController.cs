@@ -48,12 +48,13 @@ public class AuthController : ControllerBase
     
     [HttpGet("refresh")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<JWTToken>> RefreshTokenAsync()
     {
         if (!Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken))
-            return BadRequest();
+            return NoContent();
         
         var result = await _tokenService.RefreshLoginTokensAsync(refreshToken);
         

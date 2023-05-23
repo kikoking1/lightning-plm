@@ -8,6 +8,7 @@ import { NewUser } from './register/new-user';
 import { AuthInterceptor } from 'src/app/interceptors/auth.interceptor';
 import { JWTToken } from 'src/app/common/models/JWTToken';
 import { LoadingService } from 'src/app/common/services/loading.service';
+import { ErrorService } from 'src/app/common/services/error.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,13 +21,11 @@ export class AuthService {
   );
   authAction$ = this.authSubject.asObservable();
 
-  private errorMessageSubject = new BehaviorSubject<string>('');
-  errorMessage$ = this.errorMessageSubject.asObservable();
-
   constructor(
     private http: HttpClient,
     private router: Router,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private errorService: ErrorService
   ) {}
 
   register(user: NewUser) {
@@ -37,8 +36,8 @@ export class AuthService {
       })
       .pipe(
         catchError((err) => {
-          this.errorMessageSubject.next(err.error);
           this.loadingService.setLoading(false);
+          this.errorService.setError(err.error);
           return throwError(() => new Error(err.error));
         })
       )
@@ -59,8 +58,8 @@ export class AuthService {
       })
       .pipe(
         catchError((err) => {
-          this.errorMessageSubject.next(err.error);
           this.loadingService.setLoading(false);
+          this.errorService.setError(err.error);
           return throwError(() => new Error(err.error));
         })
       )
@@ -78,8 +77,8 @@ export class AuthService {
       .get(`${this.authUrl}/logout`, { withCredentials: true })
       .pipe(
         catchError((err) => {
-          this.errorMessageSubject.next(err.error);
           this.loadingService.setLoading(false);
+          this.errorService.setError(err.error);
           return throwError(() => new Error(err.error));
         })
       )
@@ -98,12 +97,16 @@ export class AuthService {
       .pipe(
         catchError((err) => {
           this.loadingService.setLoading(false);
+          this.errorService.setError(err.error);
           return throwError(() => new Error(err.error));
         })
       )
       .subscribe((res: any) => {
-        AuthInterceptor.accessToken = res.token;
-        this.authSubject.next(AuthInterceptor.isLoggedIn());
+        if (res?.token) {
+          AuthInterceptor.accessToken = res.token;
+          this.authSubject.next(AuthInterceptor.isLoggedIn());
+        }
+
         this.loadingService.setLoading(false);
       });
   }
