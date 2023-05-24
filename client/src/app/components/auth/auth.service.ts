@@ -97,7 +97,6 @@ export class AuthService {
       .pipe(
         catchError((err) => {
           this.loadingService.setLoading(false);
-          this.errorService.setError(err.error);
           return throwError(() => new Error(err.error));
         })
       )
