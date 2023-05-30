@@ -13,8 +13,8 @@ import { ErrorService } from 'src/app/common/services/error.service';
 })
 export class ProductEditComponent {
   productEditForm: FormGroup;
-
   private getByIdSub: Subscription | undefined;
+  isLoading$: Observable<boolean> = this.loadingService.isLoading$;
 
   constructor(
     private fb: FormBuilder,
@@ -30,40 +30,32 @@ export class ProductEditComponent {
     });
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     const id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
 
-    this.loadingService.setLoading(true);
-    this.getByIdSub = this.productService
-      .getById(id)
-      .pipe(
-        catchError((err) => {
-          this.loadingService.setLoading(false);
-          this.errorService.setError(err.error);
-          return throwError(() => err.error);
-        })
-      )
-      .subscribe((product) => {
-        this.loadingService.setLoading(false);
+    this.getByIdSub = this.productService.getById(id).subscribe({
+      next: (product) => {
         this.productEditForm.setValue(product);
-      });
+      },
+      error: (err) => {
+        this.errorService.setError(err.error);
+        this.router.navigate(['/products']);
+      },
+    });
   }
 
   save(): void {
     this.loadingService.setLoading(true);
-    this.productService
-      .edit(this.productEditForm.value as Product)
-      .pipe(
-        catchError((err) => {
-          this.loadingService.setLoading(false);
-          this.errorService.setError(err.error);
-          return throwError(() => err.error);
-        })
-      )
-      .subscribe(() => {
+    this.productService.edit(this.productEditForm.value as Product).subscribe({
+      next: () => {
         this.loadingService.setLoading(false);
         this.router.navigate(['/products']);
-      });
+      },
+      error: (err) => {
+        this.loadingService.setLoading(false);
+        this.errorService.setError(err.error);
+      },
+    });
   }
 
   ngOnDestroy(): void {

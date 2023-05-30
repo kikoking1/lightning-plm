@@ -14,6 +14,7 @@ import { LoadingService } from 'src/app/common/services/loading.service';
 export class ProductAddComponent {
   productAddForm: FormGroup;
   productNameDisplay$: Observable<string> | undefined;
+  isLoading$: Observable<boolean> = this.loadingService.isLoading$;
 
   constructor(
     private fb: FormBuilder,
@@ -41,7 +42,6 @@ export class ProductAddComponent {
         this.loadingService.setLoading(false);
         this.errorService.setError(err.error);
       },
-      complete: () => {},
     });
   }
 }

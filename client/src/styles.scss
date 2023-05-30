@@ -76,6 +76,34 @@ mat-form-field {
   cursor: pointer;
 }
 
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+button.mdc-button {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.spinner:before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  top: 54%;
+  left: 9px;
+  width: 17px;
+  height: 17px;
+  margin-top: -10px;
+  /* margin-left: -10px; */
+  border-radius: 50%;
+  border: 3px dotted #424242;
+  border-top-color: #888f93;
+  /* border-right-color: #000000; */
+  animation: spinner 0.8s linear infinite;
+}
+
 @media (min-width: 768px) {
 }
 

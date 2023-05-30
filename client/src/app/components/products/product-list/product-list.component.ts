@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ProductService } from '../product.service';
 import { Product } from '../product';
-import { BehaviorSubject, catchError, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, tap } from 'rxjs';
 import { ErrorService } from 'src/app/common/services/error.service';
 import { LoadingService } from 'src/app/common/services/loading.service';
 
@@ -15,6 +15,7 @@ export class ProductListComponent {
     [] as Product[]
   );
   products$ = this.productsSubject.asObservable();
+  isLoading$: Observable<boolean> = this.loadingService.isLoading$;
 
   constructor(
     private productService: ProductService,
@@ -27,17 +28,13 @@ export class ProductListComponent {
   }
 
   fetchProducts() {
-    this.loadingService.setLoading(true);
     this.productService.getProducts().subscribe({
       next: (products) => {
-        this.loadingService.setLoading(false);
         this.productsSubject.next(products);
       },
       error: (err) => {
-        this.loadingService.setLoading(false);
         this.errorService.setError(err.error);
       },
-      complete: () => {},
     });
   }
 
@@ -52,7 +49,6 @@ export class ProductListComponent {
         this.loadingService.setLoading(false);
         this.errorService.setError(err.error);
       },
-      complete: () => {},
     });
   }
 }

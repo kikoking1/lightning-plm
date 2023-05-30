@@ -29,7 +29,12 @@
         mat-raised-button
         color="primary"
         type="submit"
-        [disabled]="!productAddForm.valid"
+        [disabled]="
+          !productAddForm.valid ||
+          productAddForm.pristine ||
+          (isLoading$ | async)
+        "
+        [class.spinner]="isLoading$ | async"
       >
         Create
       </button>

@@ -30,7 +30,12 @@
       mat-raised-button
       color="primary"
       type="submit"
-      [disabled]="!productEditForm.valid"
+      [disabled]="
+        !productEditForm.valid ||
+        productEditForm.pristine ||
+        (isLoading$ | async)
+      "
+      [class.spinner]="isLoading$ | async"
     >
       Update
     </button>
