@@ -27,34 +27,32 @@ export class ProductListComponent {
   }
 
   fetchProducts() {
-    this.productService
-      .getProducts()
-      .pipe(
-        catchError((err) => {
-          this.loadingService.setLoading(false);
-          this.errorService.setError(err.error);
-          return [];
-        })
-      )
-      .subscribe((products) => {
+    this.loadingService.setLoading(true);
+    this.productService.getProducts().subscribe({
+      next: (products) => {
         this.loadingService.setLoading(false);
         this.productsSubject.next(products);
-      });
+      },
+      error: (err) => {
+        this.loadingService.setLoading(false);
+        this.errorService.setError(err.error);
+      },
+      complete: () => {},
+    });
   }
 
   delete(product: Product) {
     this.loadingService.setLoading(true);
-    this.productService
-      .delete(product)
-      .pipe(
-        catchError((err) => {
-          this.loadingService.setLoading(false);
-          this.errorService.setError(err.error);
-          return [];
-        })
-      )
-      .subscribe(() => {
+    this.productService.delete(product).subscribe({
+      next: () => {
+        this.loadingService.setLoading(false);
         this.fetchProducts();
-      });
+      },
+      error: (err) => {
+        this.loadingService.setLoading(false);
+        this.errorService.setError(err.error);
+      },
+      complete: () => {},
+    });
   }
 }

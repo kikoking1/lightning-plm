@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product } from '../product';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, of, throwError } from 'rxjs';
 import { ProductService } from '../product.service';
 import { Router } from '@angular/router';
 import { ErrorService } from 'src/app/common/services/error.service';
@@ -31,18 +31,17 @@ export class ProductAddComponent {
   }
 
   save(): void {
-    this.productService
-      .add(this.productAddForm.value as Product)
-      .pipe(
-        catchError((err) => {
-          this.loadingService.setLoading(false);
-          this.errorService.setError(err.error);
-          return throwError(() => err.error);
-        })
-      )
-      .subscribe(() => {
+    this.loadingService.setLoading(true);
+    this.productService.add(this.productAddForm.value as Product).subscribe({
+      next: () => {
         this.loadingService.setLoading(false);
         this.router.navigate(['/products']);
-      });
+      },
+      error: (err) => {
+        this.loadingService.setLoading(false);
+        this.errorService.setError(err.error);
+      },
+      complete: () => {},
+    });
   }
 }

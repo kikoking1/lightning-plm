@@ -12,7 +12,7 @@ export class ErrorService {
 
   constructor() {}
 
-  setError(errorMessage: ErrorMessage | any) {
+  setError(errorMessage: ErrorMessage | any): void {
     if (!errorMessage.hasOwnProperty('errorMessage')) {
       this.errorSubject.next({
         errorMessage: 'An unknown error has occurred.',
